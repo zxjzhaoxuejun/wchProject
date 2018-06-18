@@ -1,112 +1,119 @@
 <style lang="less">
-.art-container {
-  padding: 0 20rpx;
-  height: 100%;
-  overflow-y: hidden;
+  .art-container {
+    padding: 0 20rpx;
+    height: 100%;
+    overflow-y: hidden;
 
-  .header {
-    padding: 20rpx 0;
-  }
+    .header {
+      padding: 20rpx 0;
+    }
 
-  .title {
-    font-size: 28rpx;
-    font-weight: 700;
-    text-align: center;
-    color: #666;
-    padding: 20rpx;
-  }
+    .title {
+      font-size: 28rpx;
+      font-weight: 700;
+      text-align: center;
+      color: #666;
+      padding: 20rpx;
+    }
 
-  .thuor {
-    font-size: 24rpx;
-    color: #999;
-    text-align: center;
-    padding-bottom: 12rpx;
-    border-bottom: 1px #eee solid;
+    .thuor {
+      font-size: 24rpx;
+      color: #999;
+      text-align: center;
+      padding-bottom: 12rpx;
+      border-bottom: 1px #eee solid;
 
-    text {
-      margin: 0 10rpx;
+      text {
+        margin: 0 10rpx;
+      }
+    }
+
+    .section {
+      height: 100%;
+      flex-grow: 9999;
+      overflow-y: hidden;
+    }
+    scroll-view {
+      padding-bottom: 60rpx;
+    }
+    .wxParse-p:last-child {
+      padding-bottom: 300rpx;
     }
   }
-
-  .section {
-    height: 100%;
-    flex-grow: 9999;
-    overflow-y: hidden;
-  }
-  scroll-view {
-    padding-bottom: 60rpx;
-  }
-  .wxParse-p:last-child {
-    padding-bottom: 300rpx;
-  }
-}
 </style>
 <template>
   <view class="art-container">
     <view class="header">
       <view class="title">{{content.art_title}}</view>
-    <view class="thuor">
-      <text>发布者：{{content.art_author}}</text>
-      <text>发布时间：{{content.create_time}}</text>
-      <text>浏览量：{{content.art_view}}</text>
-    </view>
+      <view class="thuor">
+        <text>发布者：{{content.art_author}}</text>
+        <text>发布时间：{{content.create_time}}</text>
+        <text>浏览量：{{content.art_view}}</text>
+      </view>
     </view>
     <view class="section">
-  <scroll-view scroll-y style="height: 99%;" >
-    <htmlParser :parserName="name" :parserContent.sync="content1"/>
+      <scroll-view scroll-y style="height: 99%;">
+        <htmlParser :parserName="name" :parserContent.sync="content1" />
 
-    <!-- <view class="content">{{content[0].art_content}}</view> -->
-  </scroll-view>
+        <!-- <view class="content">{{content[0].art_content}}</view> -->
+      </scroll-view>
 
- 
-</view>
-    
+
+    </view>
+
   </view>
 </template>
 
 <script>
-import wepy from 'wepy';
-import htmlParser from '../components/htmlParser';
-import { formatDate } from '../utils/dateFormatTime';
+  import wepy from 'wepy';
+  import htmlParser from '../components/htmlParser';
+  import { formatDate } from '../utils/dateFormatTime';
 
-export default class Details extends wepy.page {
-  config = {
-    navigationBarTitleText: '资讯-详情',
-    enablePullDownRefresh: false
-  };
-  data = {
-    name: 'myHtmlParserKiner',
-    content1: '',
-    content: ''
-  };
+  export default class Details extends wepy.page {
+    config = {
+      navigationBarTitleText: '详情',
+      enablePullDownRefresh: false
+    };
+    data = {
+      name: 'myHtmlParserKiner',
+      content1: '',
+      content: ''
+    };
 
-  components = {
-    htmlParser: htmlParser
-  };
+    components = {
+      htmlParser: htmlParser
+    };
 
-  methods = {};
+    methods = {};
 
-  events = {};
+    events = {};
 
-  onLoad(options) {
-    if (!options.id) return;
-    let self = this;
-    wx.request({
-      url: 'https://xyy51.cn/details.php?id=' + options.id,
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: res => {
-        res.data[0].create_time = formatDate(Number(res.data[0].create_time));
-        self.content1 = res.data[0].art_content;
-        self.content = res.data[0];
-        // self.content1 = res.data;
-        //注意，在此处修改了content2之后，需要手动调用$apply()方法更新数据
-        self.$apply();
-        //调用通知接口通知组件更新数据
-        self.$invoke('htmlParser', 'htmlParserNotice');
+    onLoad(options) {
+      console.log(options)
+      if (!options.id) return;
+      var url = '';
+      if (options.type == 1) {//资讯
+        url = 'https://xyy51.cn/details.php?id=' + options.id
+      } else if (options.type == 2) {//学院
+        url = 'https://xyy51.cn/s_details.php?id=' + options.id
       }
-    });
+      let self = this;
+      wx.request({
+        url: url,
+        header: {
+          'content-type': 'application/json' // 默认值
+        },
+        success: res => {
+          res.data[0].create_time = formatDate(Number(res.data[0].create_time));
+          self.content1 = res.data[0].art_content;
+          self.content = res.data[0];
+          // self.content1 = res.data;
+          //注意，在此处修改了content2之后，需要手动调用$apply()方法更新数据
+          self.$apply();
+          //调用通知接口通知组件更新数据
+          self.$invoke('htmlParser', 'htmlParserNotice');
+        }
+      });
+    }
   }
-}
 </script>

@@ -1,4 +1,8 @@
 <style lang="less">
+.index-container {
+  height: 100%;
+  overflow: scroll;
+}
 .slide-image {
   width: 100%;
   height: 300rpx;
@@ -181,7 +185,7 @@ swiper {
     <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
       <block wx:for="{{bannerUrl}}" wx:key="id">
         <swiper-item>
-          <image src="{{item}}" class="slide-image" width="100%" height="150" />
+          <image src="https://xyy51.cn/{{item.art_thumb}}" @tap="artDetails" class="slide-image" width="100%" height="150" data-id="{{item.id}}" />
         </swiper-item>
       </block>
     </swiper>
@@ -191,13 +195,13 @@ swiper {
         <image src="../images/t_1.png" class="img-icon"></image>
         <view class="text-name">组织架构</view>
       </view>
-      <view class="tag-item color_2">
+      <view class="tag-item color_2" @tap="leader">
         <image src="../images/t_2.png" class="img-icon"></image>
         <view class="text-name">协会领导</view>
       </view>
       <view class="tag-item color_3">
         <image src="../images/t_3.png" class="img-icon"></image>
-        <view class="text-name">理事单位</view>
+        <view class="text-name" @tap="membersMore" data-id="2">理事单位</view>
       </view>
 
       <view class="tag-item color_4">
@@ -217,92 +221,47 @@ swiper {
     <view class="hot-mode">
       <view class="mode-title">
         <view class="title-text">热门资讯</view>
-        <view class="more-text">更多 &gt;&gt;</view>
+        <view class="more-text" @tap="articleMore">更多 &gt;&gt;</view>
       </view>
-      <view class="img-text-list">
-        <image src="../images/banner_01.jpg" class="img"></image>
+      <block wx:for="{{article}}" wx:key="this">
+      <view class="img-text-list" data-id="{{item.id}}" @tap="artDetails">
+        <image src="https://xyy51.cn/{{item.art_thumb}}" class="img"></image>
         <view class="list-con">
-          <view class="art-title">标题标题标题标题标题标题标题标题标标题标题标题标题标标题标题标题标题标题标题标题</view>
-          <view class="art-info">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
-        <view class="time">发布时间：2018-06-18</view>
+          <view class="art-title">{{item.art_title}}</view>
+          <view class="art-info">{{item.abstract}}</view>
+        <view class="time">发布时间：{{item.create_time}}</view>
         </view>
       </view>
-
-      <view class="img-text-list">
-        <image src="../images/banner_01.jpg" class="img"></image>
-        <view class="list-con">
-          <view class="art-title">标题标题标题标题标题标题标题标题标标题标题标题标题标标题标题标题标题标题标题标题</view>
-          <view class="art-info">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
-        <view class="time">发布时间：2018-06-18</view>
-        </view>
-      </view>
-
-      <view class="img-text-list">
-        <image src="../images/banner_01.jpg" class="img"></image>
-        <view class="list-con">
-          <view class="art-title">标题标题标题标题标题标题标题标题标标题标题标题标题标标题标题标题标题标题标题标题</view>
-          <view class="art-info">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
-        <view class="time">发布时间：2018-06-18</view>
-        </view>
-      </view>
+</block>
     </view>
    <!-- 会员单位 -->
     <view class="hot-mode">
       <view class="mode-title">
         <view class="title-text">会员单位</view>
-        <view class="more-text">更多 &gt;&gt;</view>
+        <view class="more-text" @tap="membersMore" data-id="1">更多 &gt;&gt;</view>
       </view>
-     
-        <view class="list-items">
-          2017首批会员单位名录
+        <block wx:for="{{company}}" wx:key="this">
+         <view class="list-items" data-id="{{item.id}}">
+          {{item.name}}
         </view>
-        <view class="list-items">
-         深圳德永康财税管理有限公司
-        </view>
-        <view class="list-items">
-          拾极互动科技（深圳）有限公司
-        </view>
-       <view class="list-items">
-          深圳市真话真说文化传媒有限公司
-        </view>
-        <view class="list-items">
-         深圳市源创企业信息咨询有限公司
-        </view>
-         <view class="list-items">
-          深圳市真话真说文化传媒有限公司
-        </view>
-         <view class="list-items">
-          深圳智聚网胜网络科技有限公司
-        </view>
+        </block>
     </view>
 
 <!-- 网创智库 -->
     <view class="hot-mode" style="margin-top:40rpx;">
       <view class="mode-title">
         <view class="title-text">网创智库</view>
-        <view class="more-text">更多 &gt;&gt;</view>
+        <view class="more-text" @tap="zkPersonMore">更多 &gt;&gt;</view>
       </view>
       <!-- 横向滚动 -->
     <view class="section section_gap">
       <scroll-view class="scroll-view_H" scroll-x style="width: 100%;height:300rpx;">
-       
-        <view class="zc-list scroll-view-item_H">
-          <image class="pics" src="../images/banner_01.jpg"></image>
-          <view class="name">那么</view>
+       <block wx:for="{{counselor}}" wx:key="this">
+        <view class="zc-list scroll-view-item_H" data-id="{{item.id}}" @tap="zkPersonMore">
+          <image class="pics" src="https://xyy51.cn/{{item.pics}}"></image>
+          <view class="name">{{item.name}}</view>
         </view>
-        <view class="zc-list scroll-view-item_H">
-          <image class="pics" src="../images/banner_01.jpg"></image>
-          <view class="name">那么</view>
-        </view>
-
-        <view class="zc-list scroll-view-item_H">
-          <image class="pics" src="../images/banner_01.jpg"></image>
-          <view class="name">那么</view>
-        </view>
-        <view class="zc-list scroll-view-item_H">
-          <image class="pics" src="../images/banner_01.jpg"></image>
-          <view class="name">那么</view>
-        </view>
+       </block> 
       </scroll-view>
     </view>
 
@@ -315,61 +274,122 @@ swiper {
         <view class="title-text">网创学院</view>
         <view class="more-text">更多 &gt;&gt;</view>
       </view>
-      <view class="img-text-list wc-school">
+      
+<block wx:for="{{schools}}" wx:key="this">
+      <view class="img-text-list wc-school" data-id="{{item.id}}" @tap="sDetailes">
         <view class="list-con">
-          <view class="art-title">标题标题标题标题标题标题标题标题标标题标题标题标题标标题标题标题标题标题标题标题</view>
-          <view class="art-info">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
+          <view class="art-title">{{item.art_title}}</view>
+          <view class="art-info">{{item.abstract}}</view>
         </view>
-        <image src="../images/banner_01.jpg" class="img"></image>
+        <image src="https://xyy51.cn/{{item.art_thumb}}" class="img"></image>
       </view>
+</block>
 
-      <view class="img-text-list wc-school">
-        <view class="list-con">
-          <view class="art-title">标题标题标题标题标题标题标题标题标标题标题标题标题标标题标题标题标题标题标题标题</view>
-          <view class="art-info">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
-        </view>
-        <image src="../images/banner_01.jpg" class="img"></image>
-      </view>
-
-      <view class="img-text-list wc-school">
-        <view class="list-con">
-          <view class="art-title">标题标题标题标题标题标题标题标题标标题标题标题标题标标题标题标题标题标题标题标题</view>
-          <view class="art-info">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
-        </view>
-        <image src="../images/banner_01.jpg" class="img"></image>
-      </view>  
     </view>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy';
+import { formatDate } from '../utils/dateFormatTime';
+import httpUtils from '../utils/httpUtils';
 
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '首页',
+    enablePullDownRefresh: false
   };
   data = {
-    bannerUrl: [
-      'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
-    ],
+    bannerUrl: [],
     indicatorDots: true,
     autoplay: true,
     duration: 1000,
     interval: 5000,
-    title: 'ksjkskfjsf'
+    company: [],
+    counselor: [],
+    schools: [],
+    article: []
   };
 
-  methods = {};
+  methods = {
+    articleMore() {
+      //更多资讯
+      wx.switchTab({
+        url: './news'
+      });
+    },
+    artDetails(e) {
+      //资讯详情
+      var id = e.currentTarget.dataset.id;
+      wx.navigateTo({
+        url: 'details?id=' + id + '&type=1'
+      });
+    },
+    sDetailes(e) {
+      //学院资讯
+      var id = e.currentTarget.dataset.id;
+      wx.navigateTo({
+        url: 'details?id=' + id + '&type=2'
+      });
+    },
+    zkPersonMore() {
+      //更多智库
+      wx.navigateTo({
+        url: './person'
+      });
+    },
+    leader() {
+      //协会领导
+      wx.navigateTo({
+        url: './leader'
+      });
+    },
+    membersMore() {
+      //更多会员
+      wx.switchTab({
+        url: './member'
+      });
+    }
+  };
 
   events = {};
 
   onPullDownRefresh() {
+    let self = this;
+    httpUtils.get('https://xyy51.cn/index_all.php').then(res => {
+      self.setData({
+        article: res.article,
+        company: res.company,
+        schools: res.schools,
+        counselor: res.counselor,
+        bannerUrl: res.hots
+      });
+    });
     wx.stopPullDownRefresh();
   }
-
-  onLoad() {}
+  onShow() {
+    let self = this;
+    httpUtils.get('https://xyy51.cn/index_all.php').then(res => {
+      self.setData({
+        article: res.article,
+        company: res.company,
+        schools: res.schools,
+        counselor: res.counselor,
+        bannerUrl: res.hots
+      });
+    });
+  }
+  onLoad() {
+    let self = this;
+    httpUtils.get('https://xyy51.cn/index_all.php').then(res => {
+      self.setData({
+        article: res.article,
+        company: res.company,
+        schools: res.schools,
+        counselor: res.counselor,
+        bannerUrl: res.hots
+      });
+    });
+  }
 }
 </script>

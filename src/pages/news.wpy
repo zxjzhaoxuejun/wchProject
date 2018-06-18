@@ -190,7 +190,7 @@
       artDetails(e) {//https://xyy51.cn/details.php?id=
         var id = e.currentTarget.dataset.id
         wx.navigateTo({
-          url: 'details?id=' + id
+          url: 'details?id=' + id + '&type=1'
         })
       }
     };

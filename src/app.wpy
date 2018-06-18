@@ -10,6 +10,7 @@
 
   page {
     height: 100%;
+    font-size: 24rpx;
   }
 
   .slide-image {
@@ -40,7 +41,9 @@
         'pages/help',
         'pages/member',
         'pages/user',
-        'pages/details'
+        'pages/details',
+        'pages/person',
+        'pages/leader'
       ],
       window: {
         backgroundTextStyle: '#fff',
