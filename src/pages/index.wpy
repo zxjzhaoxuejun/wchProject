@@ -1,7 +1,183 @@
 <style lang="less">
+.slide-image {
+  width: 100%;
+  height: 300rpx;
+}
+
+swiper {
+  width: 100%;
+  height: 300rpx;
+}
+
+.top-tag {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 30rpx;
+
+  .tag-item {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: 150rpx;
+    color: #fff;
+    border-radius: 8px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30rpx;
+  }
+
+  .color_1 {
+    background: #1c9cc3;
+  }
+
+  .color_2 {
+    background: #93c119;
+  }
+
+  .color_3 {
+    background: #af8bf5;
+  }
+
+  .color_4 {
+    background: #fcaf13;
+  }
+
+  .color_5 {
+    background: #ff7461;
+  }
+
+  .color_6 {
+    background: #ff7cae;
+  }
+
+  .img-icon {
+    display: block;
+    width: 80rpx;
+    height: 80rpx;
+  }
+
+  .text-name {
+    font-size: 24rpx;
+    margin-top: 10rpx;
+  }
+}
+
+.hot-mode {
+  padding: 0 20rpx;
+
+  .mode-title {
+    display: flex;
+    justify-content: space-between;
+    padding: 20rpx 0;
+    border-bottom: 1px #eee solid;
+
+    .title-text {
+      font-size: 28rpx;
+      font-weight: 700;
+
+      &::before {
+        content: '';
+        display: inline-block;
+        width: 6rpx;
+        height: 26rpx;
+        background: #fcaf13;
+        margin-right: 12rpx;
+      }
+    }
+
+    .more-text {
+      font-size: 24rpx;
+      color: #666;
+    }
+  }
+}
+
+.img-text-list {
+  display: flex;
+  justify-content: space-around;
+  padding: 20rpx 0;
+
+  .img {
+    display: block;
+    width: 36%;
+    min-height: 200rpx;
+    height: auto;
+  }
+
+  .list-con {
+    width: 60%;
+  }
+
+  .art-title {
+    font-size: 24rpx;
+    font-weight: 700;
+    display: -webkit-box;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .art-info {
+    font-size: 24rpx;
+    color: #666;
+    margin: 12rpx 0;
+    display: -webkit-box;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+  .time {
+    margin-top: 10rpx;
+    font-size: 24rpx;
+    color: #999;
+    text-align: right;
+  }
+}
+.list-items {
+  font-size: 26rpx;
+  color: #666;
+  padding: 20rpx 0;
+  border-bottom: 1px #eee solid;
+}
+.list-items:last-child {
+  border-bottom: none;
+}
+
+.scroll-view_H {
+  display: flex;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.zc-list {
+  width: 45%;
+  margin: 30rpx 0 0 0;
+  display: inline-block;
+  margin-right: 5%;
+
+  .pics {
+    display: block;
+    width: 100%;
+    height: 200rpx;
+  }
+
+  .name {
+    font-weight: 700;
+    font-size: 26rpx;
+    margin-top: 20rpx;
+    text-align: center;
+  }
+}
 </style>
 <template>
-  <view class="container">
+  <view class="index-container">
     <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
       <block wx:for="{{bannerUrl}}" wx:key="id">
         <swiper-item>
@@ -9,40 +185,191 @@
         </swiper-item>
       </block>
     </swiper>
-    <view>{{title}}</view>
+    <!-- 中间页签 -->
+    <view class="top-tag">
+      <view class="tag-item color_1">
+        <image src="../images/t_1.png" class="img-icon"></image>
+        <view class="text-name">组织架构</view>
+      </view>
+      <view class="tag-item color_2">
+        <image src="../images/t_2.png" class="img-icon"></image>
+        <view class="text-name">协会领导</view>
+      </view>
+      <view class="tag-item color_3">
+        <image src="../images/t_3.png" class="img-icon"></image>
+        <view class="text-name">理事单位</view>
+      </view>
+
+      <view class="tag-item color_4">
+        <image src="../images/t_4.png" class="img-icon"></image>
+        <view class="text-name">入会指南</view>
+      </view>
+      <view class="tag-item color_5">
+        <image src="../images/t_5.png" class="img-icon"></image>
+        <view class="text-name">会员申请</view>
+      </view>
+      <view class="tag-item color_6">
+        <image src="../images/t_6.png" class="img-icon"></image>
+        <view class="text-name">下载专区</view>
+      </view>
+    </view>
+    <!-- 热门资讯 -->
+    <view class="hot-mode">
+      <view class="mode-title">
+        <view class="title-text">热门资讯</view>
+        <view class="more-text">更多 &gt;&gt;</view>
+      </view>
+      <view class="img-text-list">
+        <image src="../images/banner_01.jpg" class="img"></image>
+        <view class="list-con">
+          <view class="art-title">标题标题标题标题标题标题标题标题标标题标题标题标题标标题标题标题标题标题标题标题</view>
+          <view class="art-info">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
+        <view class="time">发布时间：2018-06-18</view>
+        </view>
+      </view>
+
+      <view class="img-text-list">
+        <image src="../images/banner_01.jpg" class="img"></image>
+        <view class="list-con">
+          <view class="art-title">标题标题标题标题标题标题标题标题标标题标题标题标题标标题标题标题标题标题标题标题</view>
+          <view class="art-info">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
+        <view class="time">发布时间：2018-06-18</view>
+        </view>
+      </view>
+
+      <view class="img-text-list">
+        <image src="../images/banner_01.jpg" class="img"></image>
+        <view class="list-con">
+          <view class="art-title">标题标题标题标题标题标题标题标题标标题标题标题标题标标题标题标题标题标题标题标题</view>
+          <view class="art-info">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
+        <view class="time">发布时间：2018-06-18</view>
+        </view>
+      </view>
+    </view>
+   <!-- 会员单位 -->
+    <view class="hot-mode">
+      <view class="mode-title">
+        <view class="title-text">会员单位</view>
+        <view class="more-text">更多 &gt;&gt;</view>
+      </view>
+     
+        <view class="list-items">
+          2017首批会员单位名录
+        </view>
+        <view class="list-items">
+         深圳德永康财税管理有限公司
+        </view>
+        <view class="list-items">
+          拾极互动科技（深圳）有限公司
+        </view>
+       <view class="list-items">
+          深圳市真话真说文化传媒有限公司
+        </view>
+        <view class="list-items">
+         深圳市源创企业信息咨询有限公司
+        </view>
+         <view class="list-items">
+          深圳市真话真说文化传媒有限公司
+        </view>
+         <view class="list-items">
+          深圳智聚网胜网络科技有限公司
+        </view>
+    </view>
+
+<!-- 网创智库 -->
+    <view class="hot-mode" style="margin-top:40rpx;">
+      <view class="mode-title">
+        <view class="title-text">网创智库</view>
+        <view class="more-text">更多 &gt;&gt;</view>
+      </view>
+      <!-- 横向滚动 -->
+    <view class="section section_gap">
+      <scroll-view class="scroll-view_H" scroll-x style="width: 100%;height:300rpx;">
+       
+        <view class="zc-list scroll-view-item_H">
+          <image class="pics" src="../images/banner_01.jpg"></image>
+          <view class="name">那么</view>
+        </view>
+        <view class="zc-list scroll-view-item_H">
+          <image class="pics" src="../images/banner_01.jpg"></image>
+          <view class="name">那么</view>
+        </view>
+
+        <view class="zc-list scroll-view-item_H">
+          <image class="pics" src="../images/banner_01.jpg"></image>
+          <view class="name">那么</view>
+        </view>
+        <view class="zc-list scroll-view-item_H">
+          <image class="pics" src="../images/banner_01.jpg"></image>
+          <view class="name">那么</view>
+        </view>
+      </scroll-view>
+    </view>
+
+    </view>
+
+
+ <!-- 网创学院 -->
+    <view class="hot-mode" style="margin-top:40rpx;">
+      <view class="mode-title">
+        <view class="title-text">网创学院</view>
+        <view class="more-text">更多 &gt;&gt;</view>
+      </view>
+      <view class="img-text-list wc-school">
+        <view class="list-con">
+          <view class="art-title">标题标题标题标题标题标题标题标题标标题标题标题标题标标题标题标题标题标题标题标题</view>
+          <view class="art-info">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
+        </view>
+        <image src="../images/banner_01.jpg" class="img"></image>
+      </view>
+
+      <view class="img-text-list wc-school">
+        <view class="list-con">
+          <view class="art-title">标题标题标题标题标题标题标题标题标标题标题标题标题标标题标题标题标题标题标题标题</view>
+          <view class="art-info">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
+        </view>
+        <image src="../images/banner_01.jpg" class="img"></image>
+      </view>
+
+      <view class="img-text-list wc-school">
+        <view class="list-con">
+          <view class="art-title">标题标题标题标题标题标题标题标题标标题标题标题标题标标题标题标题标题标题标题标题</view>
+          <view class="art-info">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
+        </view>
+        <image src="../images/banner_01.jpg" class="img"></image>
+      </view>  
+    </view>
   </view>
 </template>
 
 <script>
-  import wepy from 'wepy'
+import wepy from 'wepy';
 
-  export default class Index extends wepy.page {
-    config = {
-      navigationBarTitleText: '首页'
-    };
-    data = {
-      bannerUrl: [
-        'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-        'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
-        'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
-      ],
-      indicatorDots: true,
-      autoplay: true,
-      duration: 1000,
-      interval: 5000,
-      title: 'ksjkskfjsf'
-    }
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '首页'
+  };
+  data = {
+    bannerUrl: [
+      'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+      'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
+      'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
+    ],
+    indicatorDots: true,
+    autoplay: true,
+    duration: 1000,
+    interval: 5000,
+    title: 'ksjkskfjsf'
+  };
 
-    methods = {
+  methods = {};
 
-    };
+  events = {};
 
-    events = {
-
-    };
-
-    onLoad() {
-
-    }
+  onPullDownRefresh() {
+    wx.stopPullDownRefresh();
   }
+
+  onLoad() {}
+}
 </script>
