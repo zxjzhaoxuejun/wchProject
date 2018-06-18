@@ -1,0 +1,32 @@
+<style lang="less">
+</style>
+<template>
+  <view class="container">
+
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class Member extends wepy.page {
+    config = {
+      navigationBarTitleText: '协会会员'
+    };
+    data = {
+
+    }
+
+    methods = {
+
+    };
+
+    events = {
+
+    };
+
+    onLoad() {
+
+    }
+  }
+</script>

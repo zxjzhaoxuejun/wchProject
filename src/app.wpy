@@ -1,0 +1,102 @@
+<style lang="less">
+  @import "/wxParse/wxParse.wxss";
+  .container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+
+  page {
+    height: 100%;
+  }
+
+  .slide-image {
+    width: 100%;
+    height: 240rpx;
+  }
+
+  swiper {
+    width: 100%;
+    height: 240rpx
+  }
+
+  loading {
+    font-size: 18rpx;
+  }
+</style>
+
+<script>
+  import wepy from 'wepy'
+  import 'wepy-async-function'
+
+
+  export default class extends wepy.app {
+    config = {
+      pages: [
+        'pages/index',
+        'pages/news',
+        'pages/help',
+        'pages/member',
+        'pages/user',
+        'pages/details'
+      ],
+      window: {
+        backgroundTextStyle: '#fff',
+        navigationBarBackgroundColor: '#1779b8',
+        navigationBarTitleText: '网创会',
+        navigationBarTextStyle: '#fff',
+        enablePullDownRefresh: true
+      },
+      "tabBar": {
+        selectedColor: '#1779b8',
+        "list": [{
+          iconPath: './images/home_n.png',
+          selectedIconPath: './images/home_h.png',
+          pagePath: 'pages/index',
+          text: '首页'
+        },
+        {
+          iconPath: './images/new_n.png',
+          selectedIconPath: './images/new_h.png',
+          pagePath: 'pages/news',
+          text: '资讯'
+        }, {
+          iconPath: './images/fw_n.png',
+          selectedIconPath: './images/fw_h.png',
+          pagePath: 'pages/help',
+          text: '服务'
+        },
+        {
+          iconPath: './images/hy.png',
+          selectedIconPath: './images/hy_h.png',
+          pagePath: 'pages/member',
+          text: '会员'
+        },
+        {
+          iconPath: './images/us_n.png',
+          selectedIconPath: './images/us_h.png',
+          pagePath: 'pages/user',
+          text: '关于'
+        }]
+      }
+    }
+
+    globalData = {
+      userInfo: null
+    }
+
+    constructor() {
+      super()
+      this.use('requestfix');
+      this.use('promisify');
+    }
+
+    onLaunch() {
+
+    }
+
+
+  }
+</script>

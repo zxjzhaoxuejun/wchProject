@@ -1,0 +1,257 @@
+<style lang="less">
+  .tab-list {
+    width: 100%;
+    height: 6%;
+    display: flex;
+    background: #f8f8f8;
+    .tab-list-item {
+      display: inline-block;
+      width: 25%;
+      padding: 15rpx 0;
+      font-size: 28rpx;
+      color: #666666;
+      text-align: center;
+    }
+    .active {
+      background: #1296db;
+      color: #ffffff;
+    }
+  }
+
+  .section {
+    height: 60%;
+    flex-grow: 9999;
+    overflow-y: hidden;
+  }
+
+  .article-list {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    font-size: 22rpx;
+    letter-spacing: 4rpx;
+    padding: 30rpx;
+    border-bottom: 1px #eeeeee solid;
+
+    .article-img {
+      width: 30%;
+      height: auto;
+    }
+    .article-con {
+      width: 66%;
+      height: auto;
+    }
+    .article-abstract {
+      display: -webkit-box;
+      word-break: break-all;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      line-height: 40rpx;
+      text-indent: 40rpx;
+    }
+    .article-thumb {
+      max-width: 100%;
+      height: 260rpx;
+    }
+    .article-title {
+      font-weight: 700;
+      font-size: 24rpx;
+      color: #323232;
+      /* padding: 16rpx 0; */
+      line-height: 40rpx;
+      display: -webkit-box;
+      word-break: break-all;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+    .article-tag {
+      display: flex;
+      margin-top: 10rpx;
+      margin-right: 20rpx;
+      padding: 16rpx 0;
+      justify-content: space-between;
+      color: #666;
+    }
+  }
+</style>
+<template>
+  <view class="container">
+    <!-- 轮播图 -->
+    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <block wx:for="{{bannerUrl}}" wx:key="id">
+        <swiper-item>
+          <image src="{{item}}" class="slide-image" width="100%" height="120" />
+        </swiper-item>
+      </block>
+    </swiper>
+    <!-- 导航 -->
+    <view class="tab-list">
+      <block wx:for="{{tapList}}" wx:key="this">
+        <text class="tab-list-item {{item.check?'active':''}}" data-index="{{index}}" @tap="changeNews">{{item.name}}</text>
+      </block>
+    </view>
+    <!-- 资讯列表 -->
+    <loading hidden="{{loadStu}}">加载中....</loading>
+    <view class="section">
+      <scroll-view scroll-y style="height:100%;">
+        <block wx:for="{{articleList}}" wx:key="this">
+          <view class="article-list" @tap="artDetails" data-id="{{item.id}}">
+            <view class="article-img">
+              <image src="{{item.art_thumb==''?img:item.art_thumb}}" class="article-thumb" mode="widthFit" />
+            </view>
+            <view class="article-con">
+              <view class="article-title">{{item.art_title}}</view>
+              <view class="article-abstract">{{item.abstract}}</view>
+              <view class="article-tag">
+                <text class="article-time">发布时间:{{item.create_time}}</text>
+                <text class="article-view">浏览量:{{item.art_view?item.art_view:0}}</text>
+              </view>
+            </view>
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import { formatDate } from '../utils/dateFormatTime';
+
+  export default class News extends wepy.page {
+    config = {
+      navigationBarTitleText: '资讯'
+    };
+    components = {};
+
+    data = {
+      tapList: [
+        { name: '行业资讯', check: true },
+        { name: '协会动态', check: false },
+        { name: '会员资讯', check: false },
+        { name: '政策信息', check: false }
+      ],
+      articleList: [],
+      loadStu: false,
+      bannerUrl: [
+        '../images/news_banner.jpg',
+        '../images/news_1.jpg'
+      ],
+      indicatorDots: false,
+      autoplay: true,
+      duration: 1000,
+      interval: 5000
+    };
+
+    computed = {
+      now() {
+        return +new Date();
+      }
+    };
+
+    methods = {
+      changeNews(e) {
+        var indexVal = e.currentTarget.dataset.index;
+        for (let i = 0; i < this.tapList.length; i++) {
+          if (i === indexVal) {
+            this.tapList[i].check = true;
+          } else {
+            this.tapList[i].check = false;
+          }
+        }
+
+        this.setData({
+          loadStu: false
+        });
+        let self = this;
+        wx.request({
+          url: 'https://xyy51.cn/api.php?id=' + (indexVal + 2), //接口地址
+          header: {
+            'content-type': 'application/json' // 默认值
+          },
+          success: function (res) {
+            for (let i = 0; i < res.data.length; i++) {
+              res.data[i].art_thumb = 'https://xyy51.cn/' + res.data[i].art_thumb;
+              res.data[i].create_time = formatDate(
+                Number(res.data[i].create_time)
+              );
+            }
+            self.setData({
+              articleList: res.data,
+              loadStu: true
+            });
+          }
+        });
+      },
+      artDetails(e) {//https://xyy51.cn/details.php?id=
+        var id = e.currentTarget.dataset.id
+        wx.navigateTo({
+          url: 'details?id=' + id
+        })
+      }
+    };
+
+    events = {};
+    onPullDownRefresh() {
+      var id = 2;
+      for (let i = 0; i < this.tapList.length; i++) {
+        if (this.tapList[i].check == true) {
+          id = i + 2;
+        }
+      }
+      let self = this;
+      wx.request({
+        url: 'https://xyy51.cn/api.php?id=' + id, //接口地址
+        header: {
+          'content-type': 'application/json' // 默认值
+        },
+        success: function (res) {
+          console.log(res.data);
+          for (let i = 0; i < res.data.length; i++) {
+            res.data[i].art_thumb = 'https://xyy51.cn/' + res.data[i].art_thumb;
+            res.data[i].create_time = formatDate(Number(res.data[i].create_time));
+          }
+          self.setData({
+            articleList: res.data,
+            loadStu: true
+          });
+          wx.stopPullDownRefresh();
+        }
+      });
+    }
+    onShow() {
+      var id = 2;
+      for (let i = 0; i < this.tapList.length; i++) {
+        if (this.tapList[i].check == true) {
+          id = i + 2;
+        }
+      }
+      let self = this;
+      wx.request({
+        url: 'https://xyy51.cn/api.php?id=' + id, //接口地址
+        header: {
+          'content-type': 'application/json' // 默认值
+        },
+        success: function (res) {
+          console.log(res.data);
+          for (let i = 0; i < res.data.length; i++) {
+            res.data[i].art_thumb = 'https://xyy51.cn/' + res.data[i].art_thumb;
+            res.data[i].create_time = formatDate(Number(res.data[i].create_time));
+          }
+          self.setData({
+            articleList: res.data,
+            loadStu: true
+          });
+        }
+      });
+    }
+
+    onLoad() {
+
+    }
+  }
+</script>
