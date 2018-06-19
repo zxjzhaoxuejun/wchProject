@@ -64,7 +64,7 @@
       enablePullDownRefresh: false
     };
     data = {
-      bannerUrl: ['../images/fw_banner.jpg'],
+      bannerUrl: ['../images/fw_banner.jpg', 'https://xyy51.cn/banner/fw.png'],
       indicatorDots: false,
       autoplay: true,
       duration: 1000,

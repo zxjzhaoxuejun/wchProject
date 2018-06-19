@@ -1,3 +1,4 @@
+<!-- 网创学院列表 -->
 <style lang="less">
   .tab-list {
     width: 100%;
@@ -88,12 +89,7 @@
         </swiper-item>
       </block>
     </swiper>
-    <!-- 导航 -->
-    <view class="tab-list">
-      <block wx:for="{{tapList}}" wx:key="this">
-        <text class="tab-list-item {{item.check?'active':''}}" data-index="{{index}}" @tap="changeNews">{{item.name}}</text>
-      </block>
-    </view>
+
     <!-- 资讯列表 -->
     <loading hidden="{{loadStu}}">加载中....</loading>
     <view class="section">
@@ -122,24 +118,17 @@
   import wepy from 'wepy';
   import { formatDate } from '../utils/dateFormatTime';
 
-  export default class News extends wepy.page {
+  export default class School extends wepy.page {
     config = {
-      navigationBarTitleText: '资讯中心'
+      navigationBarTitleText: '网创学院'
     };
     components = {};
 
     data = {
-      tapList: [
-        { name: '行业资讯', check: true },
-        { name: '协会动态', check: false },
-        { name: '会员资讯', check: false },
-        { name: '政策信息', check: false }
-      ],
       articleList: [],
       loadStu: false,
       bannerUrl: [
-        '../images/news_banner.jpg',
-        '../images/news_1.jpg'
+        'https://xyy51.cn/banner/school.png'
       ],
       indicatorDots: false,
       autoplay: true,
@@ -154,58 +143,19 @@
     };
 
     methods = {
-      changeNews(e) {
-        var indexVal = e.currentTarget.dataset.index;
-        for (let i = 0; i < this.tapList.length; i++) {
-          if (i === indexVal) {
-            this.tapList[i].check = true;
-          } else {
-            this.tapList[i].check = false;
-          }
-        }
-
-        this.setData({
-          loadStu: false
-        });
-        let self = this;
-        wx.request({
-          url: 'https://xyy51.cn/api.php?id=' + (indexVal + 2), //接口地址
-          header: {
-            'content-type': 'application/json' // 默认值
-          },
-          success: function (res) {
-            for (let i = 0; i < res.data.length; i++) {
-              res.data[i].art_thumb = 'https://xyy51.cn/' + res.data[i].art_thumb;
-              res.data[i].create_time = formatDate(
-                Number(res.data[i].create_time)
-              );
-            }
-            self.setData({
-              articleList: res.data,
-              loadStu: true
-            });
-          }
-        });
-      },
-      artDetails(e) {//https://xyy51.cn/details.php?id=
+      artDetails(e) {//https://xyy51.cn/s_details.php?id=
         var id = e.currentTarget.dataset.id
         wx.navigateTo({
-          url: 'details?id=' + id + '&type=1'
+          url: 'details?id=' + id + '&type=2'
         })
       }
     };
 
     events = {};
     onPullDownRefresh() {
-      var id = 2;
-      for (let i = 0; i < this.tapList.length; i++) {
-        if (this.tapList[i].check == true) {
-          id = i + 2;
-        }
-      }
       let self = this;
       wx.request({
-        url: 'https://xyy51.cn/api.php?id=' + id, //接口地址
+        url: 'https://xyy51.cn/schools.php', //接口地址
         header: {
           'content-type': 'application/json' // 默认值
         },
@@ -224,15 +174,9 @@
       });
     }
     onShow() {
-      var id = 2;
-      for (let i = 0; i < this.tapList.length; i++) {
-        if (this.tapList[i].check == true) {
-          id = i + 2;
-        }
-      }
       let self = this;
       wx.request({
-        url: 'https://xyy51.cn/api.php?id=' + id, //接口地址
+        url: 'https://xyy51.cn/schools.php', //接口地址
         header: {
           'content-type': 'application/json' // 默认值
         },

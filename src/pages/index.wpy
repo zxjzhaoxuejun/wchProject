@@ -1,197 +1,205 @@
 <style lang="less">
-.index-container {
-  height: 100%;
-  overflow: scroll;
-}
-.slide-image {
-  width: 100%;
-  height: 300rpx;
-}
+  .index-container {
+    height: 100%;
+    overflow: scroll;
+    background: #f8f8f8;
+  }
 
-swiper {
-  width: 100%;
-  height: 300rpx;
-}
+  .slide-image {
+    width: 100%;
+    height: 300rpx;
+  }
 
-.top-tag {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: center;
-  margin-top: 30rpx;
+  swiper {
+    width: 100%;
+    height: 300rpx;
+  }
 
-  .tag-item {
+  .top-tag {
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    width: 30%;
-    height: 150rpx;
-    color: #fff;
-    border-radius: 8px;
-    justify-content: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
     align-items: center;
-    margin-bottom: 30rpx;
+    padding-top: 30rpx;
+    background: #fff;
+
+    .tag-item {
+      display: flex;
+      flex-direction: column;
+      width: 30%;
+      height: 150rpx;
+      color: #fff;
+      border-radius: 8px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 30rpx;
+    }
+
+    .color_1 {
+      background: #1c9cc3;
+    }
+
+    .color_2 {
+      background: #93c119;
+    }
+
+    .color_3 {
+      background: #af8bf5;
+    }
+
+    .color_4 {
+      background: #fcaf13;
+    }
+
+    .color_5 {
+      background: #ff7461;
+    }
+
+    .color_6 {
+      background: #ff7cae;
+    }
+
+    .img-icon {
+      display: block;
+      width: 80rpx;
+      height: 80rpx;
+    }
+
+    .text-name {
+      font-size: 24rpx;
+      margin-top: 10rpx;
+    }
   }
 
-  .color_1 {
-    background: #1c9cc3;
-  }
+  .hot-mode {
+    padding: 0 20rpx;
+    background: #fff;
+    margin-top: 24rpx;
 
-  .color_2 {
-    background: #93c119;
-  }
+    .mode-title {
+      display: flex;
+      justify-content: space-between;
+      padding: 20rpx 0;
+      border-bottom: 1px #eee solid;
 
-  .color_3 {
-    background: #af8bf5;
-  }
+      .title-text {
+        font-size: 28rpx;
+        font-weight: 700;
 
-  .color_4 {
-    background: #fcaf13;
-  }
+        &::before {
+          content: '';
+          display: inline-block;
+          width: 6rpx;
+          height: 26rpx;
+          background: #fcaf13;
+          margin-right: 12rpx;
+        }
+      }
 
-  .color_5 {
-    background: #ff7461;
-  }
-
-  .color_6 {
-    background: #ff7cae;
-  }
-
-  .img-icon {
-    display: block;
-    width: 80rpx;
-    height: 80rpx;
-  }
-
-  .text-name {
-    font-size: 24rpx;
-    margin-top: 10rpx;
-  }
-}
-
-.hot-mode {
-  padding: 0 20rpx;
-
-  .mode-title {
-    display: flex;
-    justify-content: space-between;
-    padding: 20rpx 0;
-    border-bottom: 1px #eee solid;
-
-    .title-text {
-      font-size: 28rpx;
-      font-weight: 700;
-
-      &::before {
-        content: '';
-        display: inline-block;
-        width: 6rpx;
-        height: 26rpx;
-        background: #fcaf13;
-        margin-right: 12rpx;
+      .more-text {
+        font-size: 24rpx;
+        color: #666;
       }
     }
+  }
 
-    .more-text {
+  .img-text-list {
+    display: flex;
+    justify-content: space-around;
+    padding: 20rpx 0;
+
+    .img {
+      display: block;
+      width: 36%;
+      min-height: 200rpx;
+      height: auto;
+    }
+
+    .list-con {
+      width: 60%;
+    }
+
+    .art-title {
+      font-size: 24rpx;
+      font-weight: 700;
+      display: -webkit-box;
+      word-break: break-all;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    .art-info {
       font-size: 24rpx;
       color: #666;
+      margin: 12rpx 0;
+      display: -webkit-box;
+      word-break: break-all;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+    }
+    .time {
+      margin-top: 10rpx;
+      font-size: 24rpx;
+      color: #999;
+      text-align: right;
     }
   }
-}
 
-.img-text-list {
-  display: flex;
-  justify-content: space-around;
-  padding: 20rpx 0;
-
-  .img {
-    display: block;
-    width: 36%;
-    min-height: 200rpx;
-    height: auto;
-  }
-
-  .list-con {
-    width: 60%;
-  }
-
-  .art-title {
-    font-size: 24rpx;
-    font-weight: 700;
-    display: -webkit-box;
-    word-break: break-all;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-  }
-
-  .art-info {
-    font-size: 24rpx;
-    color: #666;
-    margin: 12rpx 0;
-    display: -webkit-box;
-    word-break: break-all;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-  }
-  .time {
-    margin-top: 10rpx;
-    font-size: 24rpx;
-    color: #999;
-    text-align: right;
-  }
-}
-.list-items {
-  font-size: 26rpx;
-  color: #666;
-  padding: 20rpx 0;
-  border-bottom: 1px #eee solid;
-}
-.list-items:last-child {
-  border-bottom: none;
-}
-
-.scroll-view_H {
-  display: flex;
-  width: 100%;
-  white-space: nowrap;
-}
-
-.zc-list {
-  width: 45%;
-  margin: 30rpx 0 0 0;
-  display: inline-block;
-  margin-right: 5%;
-
-  .pics {
-    display: block;
-    width: 100%;
-    height: 200rpx;
-  }
-
-  .name {
-    font-weight: 700;
+  .list-items {
     font-size: 26rpx;
-    margin-top: 20rpx;
-    text-align: center;
+    color: #666;
+    padding: 20rpx 0;
+    border-bottom: 1px #eee solid;
   }
-}
+
+  .list-items:last-child {
+    border-bottom: none;
+  }
+
+  .scroll-view_H {
+    display: flex;
+    width: 100%;
+    white-space: nowrap;
+  }
+
+  .zc-list {
+    width: 45%;
+    margin: 30rpx 0 0 0;
+    display: inline-block;
+    margin-right: 5%;
+
+    .pics {
+      display: block;
+      width: 100%;
+      height: 200rpx;
+    }
+
+    .name {
+      font-weight: 700;
+      font-size: 26rpx;
+      margin-top: 20rpx;
+      text-align: center;
+    }
+  }
 </style>
 <template>
   <view class="index-container">
     <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
       <block wx:for="{{bannerUrl}}" wx:key="id">
         <swiper-item>
-          <image src="https://xyy51.cn/{{item.art_thumb}}" @tap="artDetails" class="slide-image" width="100%" height="150" data-id="{{item.id}}" />
+          <image src="https://xyy51.cn/{{item.art_thumb}}" @tap="artDetails" class="slide-image" width="100%" height="150" data-id="{{item.id}}"
+          />
         </swiper-item>
       </block>
     </swiper>
     <!-- 中间页签 -->
     <view class="top-tag">
-      <view class="tag-item color_1">
+      <view class="tag-item color_1" @tap="about" data-id="2">
         <image src="../images/t_1.png" class="img-icon"></image>
         <view class="text-name">组织架构</view>
       </view>
@@ -199,12 +207,12 @@ swiper {
         <image src="../images/t_2.png" class="img-icon"></image>
         <view class="text-name">协会领导</view>
       </view>
-      <view class="tag-item color_3">
+      <view class="tag-item color_3" @tap="membersMore">
         <image src="../images/t_3.png" class="img-icon"></image>
-        <view class="text-name" @tap="membersMore" data-id="2">理事单位</view>
+        <view class="text-name" data-id="2">理事单位</view>
       </view>
 
-      <view class="tag-item color_4">
+      <view class="tag-item color_4" @tap="about" data-id="4">
         <image src="../images/t_4.png" class="img-icon"></image>
         <view class="text-name">入会指南</view>
       </view>
@@ -212,9 +220,9 @@ swiper {
         <image src="../images/t_5.png" class="img-icon"></image>
         <view class="text-name">会员申请</view>
       </view>
-      <view class="tag-item color_6">
+      <view class="tag-item color_6" @tap="about" data-id="3">
         <image src="../images/t_6.png" class="img-icon"></image>
-        <view class="text-name">下载专区</view>
+        <view class="text-name">分支机构</view>
       </view>
     </view>
     <!-- 热门资讯 -->
@@ -224,172 +232,206 @@ swiper {
         <view class="more-text" @tap="articleMore">更多 &gt;&gt;</view>
       </view>
       <block wx:for="{{article}}" wx:key="this">
-      <view class="img-text-list" data-id="{{item.id}}" @tap="artDetails">
-        <image src="https://xyy51.cn/{{item.art_thumb}}" class="img"></image>
-        <view class="list-con">
-          <view class="art-title">{{item.art_title}}</view>
-          <view class="art-info">{{item.abstract}}</view>
-        <view class="time">发布时间：{{item.create_time}}</view>
+        <view class="img-text-list" data-id="{{item.id}}" @tap="artDetails">
+          <image src="https://xyy51.cn/{{item.art_thumb}}" class="img"></image>
+          <view class="list-con">
+            <view class="art-title">{{item.art_title}}</view>
+            <view class="art-info">{{item.abstract}}</view>
+            <view class="time">发布时间：{{item.create_time}}</view>
+          </view>
         </view>
-      </view>
-</block>
+      </block>
     </view>
-   <!-- 会员单位 -->
+    <!-- 会员单位 -->
     <view class="hot-mode">
       <view class="mode-title">
         <view class="title-text">会员单位</view>
         <view class="more-text" @tap="membersMore" data-id="1">更多 &gt;&gt;</view>
       </view>
-        <block wx:for="{{company}}" wx:key="this">
-         <view class="list-items" data-id="{{item.id}}">
+      <block wx:for="{{company}}" wx:key="this">
+        <view class="list-items" data-id="{{item.id}}" @tap="memberDetails">
           {{item.name}}
         </view>
-        </block>
+      </block>
     </view>
 
-<!-- 网创智库 -->
-    <view class="hot-mode" style="margin-top:40rpx;">
+    <!-- 网创智库 -->
+    <view class="hot-mode">
       <view class="mode-title">
         <view class="title-text">网创智库</view>
         <view class="more-text" @tap="zkPersonMore">更多 &gt;&gt;</view>
       </view>
       <!-- 横向滚动 -->
-    <view class="section section_gap">
-      <scroll-view class="scroll-view_H" scroll-x style="width: 100%;height:300rpx;">
-       <block wx:for="{{counselor}}" wx:key="this">
-        <view class="zc-list scroll-view-item_H" data-id="{{item.id}}" @tap="zkPersonMore">
-          <image class="pics" src="https://xyy51.cn/{{item.pics}}"></image>
-          <view class="name">{{item.name}}</view>
-        </view>
-       </block> 
-      </scroll-view>
-    </view>
+      <view class="section section_gap">
+        <scroll-view class="scroll-view_H" scroll-x style="width: 100%;height:300rpx;">
+          <block wx:for="{{counselor}}" wx:key="this">
+            <view class="zc-list scroll-view-item_H" data-id="{{item.id}}" @tap="zkPersonMore">
+              <image class="pics" src="https://xyy51.cn/{{item.pics}}"></image>
+              <view class="name">{{item.name}}</view>
+            </view>
+          </block>
+        </scroll-view>
+      </view>
 
     </view>
 
 
- <!-- 网创学院 -->
-    <view class="hot-mode" style="margin-top:40rpx;">
+    <!-- 网创学院 -->
+    <view class="hot-mode">
       <view class="mode-title">
         <view class="title-text">网创学院</view>
-        <view class="more-text">更多 &gt;&gt;</view>
+        <view class="more-text" @tap="schoolMore">更多 &gt;&gt;</view>
       </view>
-      
-<block wx:for="{{schools}}" wx:key="this">
-      <view class="img-text-list wc-school" data-id="{{item.id}}" @tap="sDetailes">
-        <view class="list-con">
-          <view class="art-title">{{item.art_title}}</view>
-          <view class="art-info">{{item.abstract}}</view>
+
+      <block wx:for="{{schools}}" wx:key="this">
+        <view class="img-text-list wc-school" data-id="{{item.id}}" @tap="sDetailes">
+          <view class="list-con">
+            <view class="art-title">{{item.art_title}}</view>
+            <view class="art-info">{{item.abstract}}</view>
+          </view>
+          <image src="https://xyy51.cn/{{item.art_thumb}}" class="img"></image>
         </view>
-        <image src="https://xyy51.cn/{{item.art_thumb}}" class="img"></image>
-      </view>
-</block>
+      </block>
 
     </view>
   </view>
 </template>
 
 <script>
-import wepy from 'wepy';
-import { formatDate } from '../utils/dateFormatTime';
-import httpUtils from '../utils/httpUtils';
+  import wepy from 'wepy';
+  import { formatDate } from '../utils/dateFormatTime';
+  import httpUtils from '../utils/httpUtils';
 
-export default class Index extends wepy.page {
-  config = {
-    navigationBarTitleText: '首页',
-    enablePullDownRefresh: false
-  };
-  data = {
-    bannerUrl: [],
-    indicatorDots: true,
-    autoplay: true,
-    duration: 1000,
-    interval: 5000,
-    company: [],
-    counselor: [],
-    schools: [],
-    article: []
-  };
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '首页',
+      enablePullDownRefresh: false
+    };
+    data = {
+      bannerUrl: [],
+      indicatorDots: true,
+      autoplay: true,
+      duration: 1000,
+      interval: 5000,
+      company: [],
+      counselor: [],
+      schools: [],
+      article: []
+    };
 
-  methods = {
-    articleMore() {
-      //更多资讯
-      wx.switchTab({
-        url: './news'
+    methods = {
+      articleMore() {
+        //更多资讯
+        wx.switchTab({
+          url: './news'
+        });
+      },
+      artDetails(e) {
+        //资讯详情
+        var id = e.currentTarget.dataset.id;
+        wx.navigateTo({
+          url: './details?id=' + id + '&type=1'
+        });
+      },
+      sDetailes(e) {
+        //学院资讯
+        var id = e.currentTarget.dataset.id;
+        wx.navigateTo({
+          url: './details?id=' + id + '&type=2'
+        });
+      },
+      zkPersonMore() {
+        //更多智库
+        wx.navigateTo({
+          url: './person'
+        });
+      },
+      leader() {
+        //协会领导
+        wx.navigateTo({
+          url: './leader'
+        });
+      },
+      membersMore() {
+        //更多会员
+        wx.switchTab({
+          url: './member'
+        });
+      },
+      memberDetails(e) {//会员详情
+        var id = e.currentTarget.dataset.id;
+        wx.navigateTo({
+          url: './member-details?id=' + id + '&type=1'
+        });
+      },
+      about(e) {//组织架构，协会指南，分支机构
+        var id = e.currentTarget.dataset.id;
+        wx.navigateTo({
+          url: './other-us?id=' + id
+        });
+      },
+      schoolMore() {//网创学院
+        wx.navigateTo({
+          url: './school'
+        });
+      }
+    };
+
+    events = {};
+
+    onShareAppMessage() {
+      return {
+        title: '深圳市网创会',
+        path: '/page/index',
+        imageUrl: '../images/logo_3.jpg'
+      }
+    }
+
+    onPullDownRefresh() {
+      let self = this;
+      httpUtils.get('https://xyy51.cn/index_all.php').then(res => {
+        for (let i = 0; i < res.article.length; i++) {//formatDate
+          res.article[i].create_time = formatDate(Number(res.article[i].create_time));
+        }
+        self.setData({
+          article: res.article,
+          company: res.company,
+          schools: res.schools,
+          counselor: res.counselor,
+          bannerUrl: res.hots
+        });
       });
-    },
-    artDetails(e) {
-      //资讯详情
-      var id = e.currentTarget.dataset.id;
-      wx.navigateTo({
-        url: 'details?id=' + id + '&type=1'
-      });
-    },
-    sDetailes(e) {
-      //学院资讯
-      var id = e.currentTarget.dataset.id;
-      wx.navigateTo({
-        url: 'details?id=' + id + '&type=2'
-      });
-    },
-    zkPersonMore() {
-      //更多智库
-      wx.navigateTo({
-        url: './person'
-      });
-    },
-    leader() {
-      //协会领导
-      wx.navigateTo({
-        url: './leader'
-      });
-    },
-    membersMore() {
-      //更多会员
-      wx.switchTab({
-        url: './member'
+      wx.stopPullDownRefresh();
+    }
+    onShow() {
+      let self = this;
+      httpUtils.get('https://xyy51.cn/index_all.php').then(res => {
+        for (let i = 0; i < res.article.length; i++) {//formatDate
+          res.article[i].create_time = formatDate(Number(res.article[i].create_time));
+        }
+        self.setData({
+          article: res.article,
+          company: res.company,
+          schools: res.schools,
+          counselor: res.counselor,
+          bannerUrl: res.hots
+        });
       });
     }
-  };
-
-  events = {};
-
-  onPullDownRefresh() {
-    let self = this;
-    httpUtils.get('https://xyy51.cn/index_all.php').then(res => {
-      self.setData({
-        article: res.article,
-        company: res.company,
-        schools: res.schools,
-        counselor: res.counselor,
-        bannerUrl: res.hots
+    onLoad() {
+      let self = this;
+      httpUtils.get('https://xyy51.cn/index_all.php').then(res => {
+        for (let i = 0; i < res.article.length; i++) {//formatDate
+          res.article[i].create_time = formatDate(Number(res.article[i].create_time));
+        }
+        self.setData({
+          article: res.article,
+          company: res.company,
+          schools: res.schools,
+          counselor: res.counselor,
+          bannerUrl: res.hots
+        });
       });
-    });
-    wx.stopPullDownRefresh();
+    }
   }
-  onShow() {
-    let self = this;
-    httpUtils.get('https://xyy51.cn/index_all.php').then(res => {
-      self.setData({
-        article: res.article,
-        company: res.company,
-        schools: res.schools,
-        counselor: res.counselor,
-        bannerUrl: res.hots
-      });
-    });
-  }
-  onLoad() {
-    let self = this;
-    httpUtils.get('https://xyy51.cn/index_all.php').then(res => {
-      self.setData({
-        article: res.article,
-        company: res.company,
-        schools: res.schools,
-        counselor: res.counselor,
-        bannerUrl: res.hots
-      });
-    });
-  }
-}
 </script>

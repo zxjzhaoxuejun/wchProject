@@ -43,7 +43,10 @@
         'pages/user',
         'pages/details',
         'pages/person',
-        'pages/leader'
+        'pages/leader',
+        'pages/member-details',
+        'pages/other-us',
+        'pages/school'
       ],
       window: {
         backgroundTextStyle: '#fff',

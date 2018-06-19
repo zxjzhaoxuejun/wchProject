@@ -1,0 +1,76 @@
+<!-- 组织架构，分支机构，协会指南 -->
+<style lang="less">
+.art-container {
+  padding: 30rpx;
+
+  .wxParse-img {
+    margin-top: 40rpx;
+  }
+}
+</style>
+<template>
+  <view class="art-container">
+    <htmlParser :parserName="name" :parserContent.sync="content1" />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import htmlParser from '../components/htmlParser';
+
+export default class OtherUs extends wepy.page {
+  config = {
+    navigationBarTitleText: '组织架构',
+    enablePullDownRefresh: false
+  };
+  data = {
+    name: 'myHtmlParserKiner',
+    content1: ''
+  };
+
+  components = {
+    htmlParser: htmlParser
+  };
+
+  methods = {};
+
+  events = {};
+
+  onLoad(options) {
+    console.log(options);
+    if (!options.id) return;
+    var url = 'https://xyy51.cn/about.php?id=' + options.id;
+
+    let self = this;
+    wx.request({
+      url: url,
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: res => {
+        var name = '';
+        if (options.id == 2) {
+          name = '组织架构';
+          self.content1 = res.data[0].framework;
+        } else if (options.id == 3) {
+          name = '分支机构';
+          self.content1 = res.data[0].organization;
+        } else if (options.id == 4) {
+          name = '入会指南';
+          self.content1 = res.data[0].initiation;
+        }
+        wx.setNavigationBarTitle({
+          title: name
+        });
+        //2.framework,3.organization,4.initiation
+
+        // self.content1 = res.data;
+        //注意，在此处修改了content2之后，需要手动调用$apply()方法更新数据
+        self.$apply();
+        //调用通知接口通知组件更新数据
+        self.$invoke('htmlParser', 'htmlParserNotice');
+      }
+    });
+  }
+}
+</script>
