@@ -216,7 +216,7 @@
         <image src="../images/t_4.png" class="img-icon"></image>
         <view class="text-name">入会指南</view>
       </view>
-      <view class="tag-item color_5">
+      <view class="tag-item color_5" @tap="register">
         <image src="../images/t_5.png" class="img-icon"></image>
         <view class="text-name">会员申请</view>
       </view>
@@ -373,6 +373,12 @@
       schoolMore() {//网创学院
         wx.navigateTo({
           url: './school'
+        });
+      },
+      register() {
+        //注册
+        wx.navigateTo({
+          url: './register'
         });
       }
     };

@@ -1,0 +1,251 @@
+<!-- 注册页 -->
+<style lang="less">
+.reg-container {
+  height: 100%;
+  overflow-y: scroll;
+  font-size: 26rpx;
+
+  .form-mode {
+    padding: 20rpx 30rpx;
+  }
+
+  .section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20rpx 0;
+    border-bottom: 1px #ccc solid;
+  }
+
+  .section-title {
+    width: 30%;
+    display: inline-block;
+  }
+
+  .input-val,
+  picker {
+    display: inline-block;
+    flex-grow: 9999;
+  }
+
+  .required {
+    color: red;
+    margin-right: 8rpx;
+  }
+
+  button {
+    background: #1779b8;
+    color: #ffffff;
+    margin-top: 50rpx;
+  }
+  .error-mode {
+    display: flex;
+    padding: 20rpx;
+    background: #ff6600;
+    align-items: center;
+    color: #fff;
+
+    text {
+      margin-left: 10rpx;
+    }
+  }
+}
+</style>
+<template>
+  <view class="reg-container">
+    <!--注册 -->
+    <view wx:if="{{errors}}" class="error-mode" >
+      <icon class="weui-icon-warn" type="clear"  bindtap="clear" color="#fff" size="18"></icon>
+      <text>{{errors}}</text>
+    </view>
+    <view class="form-mode">
+     <form bindsubmit="submitForm">
+    <view class="section">
+      <label class="section-title"><text class="required">*</text>选择级别:</label>
+      <picker bindchange="bindPickerChange" range="{{selectList}}">
+        <view class="picker">
+          {{selectList[answer.index]}}
+        </view>
+      </picker>
+    </view>
+    <view class="section">
+      <label class="section-title"><text class="required">*</text>公司名称:</label>
+      <input type="text" maxlength="50" name="name" bindinput="bindKeyInput" class="input-val" data-name="name" placeholder="输入公司名称..."/>
+    </view>
+    <view class="section">
+      <label class="section-title"><text class="required">*</text>联系人:</label>
+      <input type="text" maxlength="10" bindinput="bindKeyInput" name="link" class="input-val" data-name="link_man" placeholder="输入联系人..."/>
+    </view>
+    <view class="section">
+      <label class="section-title"><text class="required">*</text>联系方式:</label>
+      <input type="number" name="tel" maxlength="12" bindinput="bindKeyInput" class="input-val" data-name="tel" placeholder="输入联系方式..."/>
+    </view>
+    <view class="section">
+      <label class="section-title"><text class="required"></text>电子邮箱:</label>
+      <input type="text" maxlength="40" bindinput="bindKeyInput" name="email" class="input-val" data-name="email" placeholder="输入邮箱..."/>
+    </view>
+    <view class="section">
+      <label class="section-title"><text class="required"></text>公司网址:</label>
+      <input type="text" maxlength="50" name="url" bindinput="bindKeyInput" class="input-val" data-name="tb_url" placeholder="输入公司网址..."/>
+    </view>
+
+    <view class="section">
+      <label class="section-title"><text class="required"></text>简介:</label>
+      <textarea name="describe" placeholder="说点什么..." bindinput="bindKeyInput" data-name="describe" auto-height maxlength="300" />
+    </view>
+    <button formType="submit" loading="{{loading}}" disabled="{{disabled}}">{{buttonText}}</button>
+    </form>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import httpUtils from '../utils/httpUtils';
+import WxValidate from '../utils/WxValidate';
+
+export default class Register extends wepy.page {
+  config = {
+    navigationBarTitleText: '入会申请',
+    enablePullDownRefresh: false
+  };
+  data = {
+    selectList: ['会员单位', '理事单位', '副会长单位', '联席会长单位'],
+    loading: false,
+    buttonText: '提交申请',
+    disabled: false,
+    answer: {
+      index: 1
+    },
+    errors: ''
+  };
+
+  methods = {
+    bindPickerChange(e) {
+      this.answer.index = e.detail.value;
+      this.$apply();
+    },
+    bindKeyInput(e) {
+      var name = e.currentTarget.dataset.name;
+      this.answer[name] = e.detail.value;
+      this.$apply();
+    },
+    clear() {
+      this.errors = '';
+      this.$apply();
+    }
+  };
+
+  setLoading() {
+    this.loading = !this.data.loading;
+    this.buttonText = '提交中...';
+    this.disabled = true;
+    this.$apply();
+    console.log(this.data);
+    let self = this;
+    setTimeout(() => {
+      self.loading = false;
+      self.buttonText = '提交申请';
+      self.disabled = false;
+      // self.answer = {};
+      this.answer.index = 0;
+      self.$apply();
+      wx.showToast({
+        title: '提交成功!'
+      });
+    }, 3000);
+  }
+
+  submitForm(e) {
+    // 传入表单数据，调用验证方法
+    if (!this.WxValidate.checkForm(e)) {
+      const error = this.WxValidate.errorList[0];
+      this.errors = error.msg;
+      this.$apply();
+      return false;
+    }
+    this.errors = '';
+    this.setLoading();
+  }
+
+  initValidate() {
+    // 验证字段的规则
+    const rules = {
+      name: {
+        required: true,
+        maxlength: 50
+      },
+      link: {
+        required: true
+      },
+      email: {
+        email: true
+      },
+      tel: {
+        required: true,
+        tel: true
+      },
+      url: {
+        url: true
+      },
+      describe: {
+        maxlength: 300
+      }
+    };
+
+    // 验证字段的提示信息，若不传则调用默认的信息
+    const messages = {
+      name: {
+        required: '请输入公司名称',
+        maxlength: '最多输入50个字符'
+      },
+      link: {
+        required: '请输入联系人'
+      },
+      email: {
+        email: '请输入正确的邮箱'
+      },
+      tel: {
+        required: '请输入手机号',
+        tel: '请输入正确的手机号'
+      },
+      url: {
+        url: '输入正确网址'
+      },
+      describe: {
+        maxlength: '最多输入300个字符'
+      }
+    };
+
+    // 创建实例对象
+    this.WxValidate = new WxValidate(rules, messages);
+
+    // 自定义验证规则
+    this.WxValidate.addMethod(
+      'assistance',
+      (value, param) => {
+        return (
+          this.WxValidate.optional(value) ||
+          (value.length >= 1 && value.length <= 2)
+        );
+      },
+      '请勾选1-2个敲码助手'
+    );
+  }
+  events = {};
+
+  onShow() {
+    let self = this;
+    // httpUtils.get('https://xyy51.cn/service.php').then(res => {
+    //   console.log(res);
+    //   self.setData({
+    //     serviceVal: res[0]
+    //   });
+    // });
+  }
+  onLoad() {
+    this.initValidate();
+    // console.log(this.WxValidate);
+  }
+}
+</script>

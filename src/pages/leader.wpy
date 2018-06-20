@@ -79,7 +79,6 @@
     onShow() {
       let self = this;
       httpUtils.get('https://xyy51.cn/personList.php?id=2').then(res => {
-        console.log(res);
         self.setData({
           person: res
         });

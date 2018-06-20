@@ -46,7 +46,8 @@
         'pages/leader',
         'pages/member-details',
         'pages/other-us',
-        'pages/school'
+        'pages/school',
+        'pages/register'
       ],
       window: {
         backgroundTextStyle: '#fff',

@@ -1,5 +1,5 @@
 <style lang="less">
-@import '../less/details.less';
+  @import '../less/details.less';
 </style>
 <template>
   <view class="art-container">
@@ -14,74 +14,70 @@
     <view class="section">
       <scroll-view scroll-y style="height: 99%;">
         <htmlParser :parserName="name" :parserContent.sync="content1" />
-
-        <!-- <view class="content">{{content[0].art_content}}</view> -->
       </scroll-view>
-
-
     </view>
 
   </view>
 </template>
 
 <script>
-import wepy from 'wepy';
-import htmlParser from '../components/htmlParser';
-import { formatDate } from '../utils/dateFormatTime';
+  import wepy from 'wepy';
+  import htmlParser from '../components/htmlParser';
+  import { formatDate } from '../utils/dateFormatTime';
 
-export default class Details extends wepy.page {
-  config = {
-    navigationBarTitleText: '详情',
-    enablePullDownRefresh: false
-  };
-  data = {
-    name: 'myHtmlParserKiner',
-    content1: '',
-    content: ''
-  };
-
-  components = {
-    htmlParser: htmlParser
-  };
-
-  methods = {};
-
-  events = {};
-
-  onShareAppMessage() {
-    return {
-      title: this.content.art_title,
-      path: '/page/details'
+  export default class Details extends wepy.page {
+    config = {
+      navigationBarTitleText: '详情',
+      enablePullDownRefresh: false
     };
-  }
-  onLoad(options) {
-    console.log(options);
-    if (!options.id) return;
-    var url = '';
-    if (options.type == 1) {
-      //资讯
-      url = 'https://xyy51.cn/details.php?id=' + options.id;
-    } else if (options.type == 2) {
-      //学院
-      url = 'https://xyy51.cn/s_details.php?id=' + options.id;
+    data = {
+      name: 'myHtmlParserKiner',
+      content1: '',
+      content: ''
+    };
+
+    components = {
+      htmlParser: htmlParser
+    };
+
+    methods = {};
+
+    events = {};
+
+    onShareAppMessage() {
+      return {
+        title: this.content.art_title,
+        path: '/page/details'
+      };
     }
-    let self = this;
-    wx.request({
-      url: url,
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: res => {
-        res.data[0].create_time = formatDate(Number(res.data[0].create_time));
-        self.content1 = res.data[0].art_content;
-        self.content = res.data[0];
-        // self.content1 = res.data;
-        //注意，在此处修改了content2之后，需要手动调用$apply()方法更新数据
-        self.$apply();
-        //调用通知接口通知组件更新数据
-        self.$invoke('htmlParser', 'htmlParserNotice');
+    onLoad(options) {
+      console.log(options);
+      if (!options.id) return;
+      var url = '';
+      if (options.type == 1) {
+        //资讯
+        url = 'https://xyy51.cn/details.php?id=' + options.id;
+      } else if (options.type == 2) {
+        //学院
+        url = 'https://xyy51.cn/s_details.php?id=' + options.id;
       }
-    });
+      let self = this;
+      wx.request({
+        url: url,
+        header: {
+          'content-type': 'application/json' // 默认值
+        },
+        success: res => {
+          res.data[0].create_time = formatDate(Number(res.data[0].create_time));
+          self.content1 = res.data[0].art_content;
+          self.content = res.data[0];
+          // self.content1 = res.data;
+          //注意，在此处修改了content2之后，需要手动调用$apply()方法更新数据
+          self.$apply();
+          //调用通知接口通知组件更新数据
+          self.$invoke('htmlParser', 'htmlParserNotice');
+        }
+      });
+    }
   }
-}
 </script>
