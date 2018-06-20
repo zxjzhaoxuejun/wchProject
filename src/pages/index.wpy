@@ -301,6 +301,7 @@
   import wepy from 'wepy';
   import { formatDate } from '../utils/dateFormatTime';
   import httpUtils from '../utils/httpUtils';
+  import Api from '../utils/api';
 
   export default class Index extends wepy.page {
     config = {
@@ -395,7 +396,7 @@
 
     onPullDownRefresh() {
       let self = this;
-      httpUtils.get('https://xyy51.cn/index_all.php').then(res => {
+      httpUtils.get(Api.index).then(res => {
         for (let i = 0; i < res.article.length; i++) {//formatDate
           res.article[i].create_time = formatDate(Number(res.article[i].create_time));
         }
@@ -411,7 +412,7 @@
     }
     onShow() {
       let self = this;
-      httpUtils.get('https://xyy51.cn/index_all.php').then(res => {
+      httpUtils.get(Api.index).then(res => {
         for (let i = 0; i < res.article.length; i++) {//formatDate
           res.article[i].create_time = formatDate(Number(res.article[i].create_time));
         }
@@ -426,7 +427,7 @@
     }
     onLoad() {
       let self = this;
-      httpUtils.get('https://xyy51.cn/index_all.php').then(res => {
+      httpUtils.get(Api.index).then(res => {
         for (let i = 0; i < res.article.length; i++) {//formatDate
           res.article[i].create_time = formatDate(Number(res.article[i].create_time));
         }

@@ -121,6 +121,7 @@
 <script>
   import wepy from 'wepy';
   import { formatDate } from '../utils/dateFormatTime';
+  import Api from '../utils/api';
 
   export default class News extends wepy.page {
     config = {
@@ -169,7 +170,7 @@
         });
         let self = this;
         wx.request({
-          url: 'https://xyy51.cn/api.php?id=' + (indexVal + 2), //接口地址
+          url: Api.news + (indexVal + 2), //接口地址
           header: {
             'content-type': 'application/json' // 默认值
           },
@@ -205,7 +206,7 @@
       }
       let self = this;
       wx.request({
-        url: 'https://xyy51.cn/api.php?id=' + id, //接口地址
+        url: Api.news + id, //接口地址
         header: {
           'content-type': 'application/json' // 默认值
         },
@@ -232,7 +233,7 @@
       }
       let self = this;
       wx.request({
-        url: 'https://xyy51.cn/api.php?id=' + id, //接口地址
+        url: Api.news + id, //接口地址
         header: {
           'content-type': 'application/json' // 默认值
         },

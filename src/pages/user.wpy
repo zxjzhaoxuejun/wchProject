@@ -1,26 +1,26 @@
 <style lang="less">
-.wxParse-p {
-  display: none;
-}
-
-.about-container {
-  padding: 30rpx 0;
-}
-
-.wxParse-p:first-child {
-  display: block;
-  padding: 20rpx 30rpx;
-
-  .wxParse-inline {
-    display: block;
-    letter-spacing: 4rpx;
-    line-height: 46rpx;
-    text-indent: 50rpx;
-  }
-  text:nth-of-type(odd) {
+  .wxParse-p {
     display: none;
   }
-}
+
+  .about-container {
+    padding: 30rpx 0;
+  }
+
+  .wxParse-p:first-child {
+    display: block;
+    padding: 20rpx 30rpx;
+
+    .wxParse-inline {
+      display: block;
+      letter-spacing: 4rpx;
+      line-height: 46rpx;
+      text-indent: 50rpx;
+    }
+    text:nth-of-type(odd) {
+      display: none;
+    }
+  }
 </style>
 <template>
   <view class="about-container">
@@ -29,45 +29,46 @@
 </template>
 
 <script>
-import wepy from 'wepy';
-import htmlParser from '../components/htmlParser';
+  import wepy from 'wepy';
+  import htmlParser from '../components/htmlParser';
+  import Api from '../utils/api';
 
-export default class User extends wepy.page {
-  config = {
-    navigationBarTitleText: '协会简介',
-    enablePullDownRefresh: false
-  };
-  data = {
-    name: 'myHtmlParserKiner',
-    content1: ''
-  };
+  export default class User extends wepy.page {
+    config = {
+      navigationBarTitleText: '协会简介',
+      enablePullDownRefresh: false
+    };
+    data = {
+      name: 'myHtmlParserKiner',
+      content1: ''
+    };
 
-  components = {
-    htmlParser: htmlParser
-  };
+    components = {
+      htmlParser: htmlParser
+    };
 
-  methods = {};
+    methods = {};
 
-  events = {};
+    events = {};
 
-  onLoad() {
-    var url = 'https://xyy51.cn/about.php?id=1';
-    let self = this;
-    wx.request({
-      url: url,
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: res => {
-        console.log(res);
-        self.content1 = res.data[0].abstract;
-        // self.content1 = res.data;
-        //注意，在此处修改了content2之后，需要手动调用$apply()方法更新数据
-        self.$apply();
-        //调用通知接口通知组件更新数据
-        self.$invoke('htmlParser', 'htmlParserNotice');
-      }
-    });
+    onLoad() {
+      var url = Api.user;
+      let self = this;
+      wx.request({
+        url: url,
+        header: {
+          'content-type': 'application/json' // 默认值
+        },
+        success: res => {
+          console.log(res);
+          self.content1 = res.data[0].abstract;
+          // self.content1 = res.data;
+          //注意，在此处修改了content2之后，需要手动调用$apply()方法更新数据
+          self.$apply();
+          //调用通知接口通知组件更新数据
+          self.$invoke('htmlParser', 'htmlParserNotice');
+        }
+      });
+    }
   }
-}
 </script>

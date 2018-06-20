@@ -81,6 +81,7 @@
 <script>
   import wepy from 'wepy';
   import httpUtils from '../utils/httpUtils';
+  import Api from '../utils/api';
 
   export default class Member extends wepy.page {
     config = {
@@ -111,7 +112,7 @@
         }
         let self = this;
         httpUtils
-          .get('https://xyy51.cn/members.php?id=' + (indexVal + 1))
+          .get(Api.member + (indexVal + 1))
           .then(res => {
             self.setData({
               list: res
@@ -139,7 +140,7 @@
         }
       }
       let self = this;
-      httpUtils.get('https://xyy51.cn/members.php?id=' + id).then(res => {
+      httpUtils.get(Api.member + id).then(res => {
         self.setData({
           list: res
         });
@@ -155,7 +156,7 @@
         }
       }
       let self = this;
-      var url = 'https://xyy51.cn/members.php?id=' + id;
+      var url = Api.member + id;
       httpUtils.get(url).then(res => {
         self.setData({
           list: res

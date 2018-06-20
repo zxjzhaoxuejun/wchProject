@@ -57,6 +57,7 @@
 <script>
   import wepy from 'wepy';
   import httpUtils from '../utils/httpUtils';
+  import Api from '../utils/api';
 
   export default class Person extends wepy.page {
     config = {
@@ -78,7 +79,7 @@
 
     onShow() {
       let self = this;
-      httpUtils.get('https://xyy51.cn/personList.php?id=1').then(res => {
+      httpUtils.get(Api.ideas).then(res => {
         console.log(res);
         self.setData({
           person: res

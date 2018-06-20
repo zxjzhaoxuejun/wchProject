@@ -1,32 +1,32 @@
 <style lang="less">
-  .per-container {
-    height: 100%;
-    overflow-y: scroll;
+.per-container {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.person-mode {
+  padding: 30rpx;
+
+  .img {
+    display: block;
+    width: 100%;
+    height: 360rpx;
   }
 
-  .person-mode {
-    padding: 30rpx;
+  .person-list {
+    border: 1px #ccc solid;
+    border-radius: 6px;
+    margin-bottom: 30rpx;
 
-    .img {
-      display: block;
-      width: 100%;
-      height: 360rpx;
+    view {
+      padding: 20rpx;
+      font-size: 26rpx;
     }
-
-    .person-list {
-      border: 1px #ccc solid;
-      border-radius: 6px;
-      margin-bottom: 30rpx;
-
-      view {
-        padding: 20rpx;
-        font-size: 26rpx;
-      }
-      text {
-        font-weight: 700;
-      }
+    text {
+      font-weight: 700;
     }
   }
+}
 </style>
 <template>
   <view class="per-container">
@@ -55,34 +55,35 @@
 </template>
 
 <script>
-  import wepy from 'wepy';
-  import httpUtils from '../utils/httpUtils';
+import wepy from 'wepy';
+import httpUtils from '../utils/httpUtils';
+import Api from '../utils/api';
 
-  export default class Leader extends wepy.page {
-    config = {
-      navigationBarTitleText: '协会领导',
-      enablePullDownRefresh: false
-    };
-    data = {
-      bannerUrl: ['https://xyy51.cn/banner/js.png'],
-      indicatorDots: false,
-      autoplay: true,
-      duration: 1000,
-      interval: 5000,
-      person: []
-    };
+export default class Leader extends wepy.page {
+  config = {
+    navigationBarTitleText: '协会领导',
+    enablePullDownRefresh: false
+  };
+  data = {
+    bannerUrl: ['https://xyy51.cn/banner/js.png'],
+    indicatorDots: false,
+    autoplay: true,
+    duration: 1000,
+    interval: 5000,
+    person: []
+  };
 
-    methods = {};
+  methods = {};
 
-    events = {};
+  events = {};
 
-    onShow() {
-      let self = this;
-      httpUtils.get('https://xyy51.cn/personList.php?id=2').then(res => {
-        self.setData({
-          person: res
-        });
+  onShow() {
+    let self = this;
+    httpUtils.get(Api.leader).then(res => {
+      self.setData({
+        person: res
       });
-    }
+    });
   }
+}
 </script>

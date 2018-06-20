@@ -24,6 +24,7 @@
   import wepy from 'wepy';
   import htmlParser from '../components/htmlParser';
   import { formatDate } from '../utils/dateFormatTime';
+  import Api from '../utils/api';
 
   export default class Details extends wepy.page {
     config = {
@@ -56,10 +57,10 @@
       var url = '';
       if (options.type == 1) {
         //资讯
-        url = 'https://xyy51.cn/details.php?id=' + options.id;
+        url = Api.details + options.id;
       } else if (options.type == 2) {
         //学院
-        url = 'https://xyy51.cn/s_details.php?id=' + options.id;
+        url = Api.school + options.id;
       }
       let self = this;
       wx.request({

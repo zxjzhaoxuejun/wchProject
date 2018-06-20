@@ -57,6 +57,7 @@
 <script>
   import wepy from 'wepy';
   import httpUtils from '../utils/httpUtils';
+  import Api from '../utils/api';
 
   export default class Help extends wepy.page {
     config = {
@@ -79,7 +80,7 @@
 
     onShow() {
       let self = this;
-      httpUtils.get('https://xyy51.cn/service.php').then((res) => {
+      httpUtils.get(Api.service).then((res) => {
         console.log(res)
         self.setData({
           serviceVal: res[0]
