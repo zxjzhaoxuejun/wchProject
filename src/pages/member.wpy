@@ -168,16 +168,31 @@
     }
     events = {};
     onShow() {
+      var memberId = wx.getStorageSync('memberId');
       var id = 1;
-      for (let i = 0; i < this.tapList.length; i++) {
-        if (this.tapList[i].check == true) {
-          id = i + 1;
+      if (memberId) {
+        for (let i = 0; i < this.tapList.length; i++) {
+          if ((i + 1) == memberId) {
+            this.tapList[i].check = true;
+          } else {
+            this.tapList[i].check = false
+          }
+        }
+        this.$apply();
+        id = memberId;
+      } else {
+        for (let i = 0; i < this.tapList.length; i++) {
+          if (this.tapList[i].check == true) {
+            id = i + 1;
+          }
         }
       }
+
       let self = this;
       var url = Api.member + id;
       httpUtils.get(url).then(res => {
-        wx.setStorageSync("data", res)
+        wx.setStorageSync("data", res);
+        wx.removeStorageSync('memberId');
         self.setData({
           list: res
         });
@@ -209,6 +224,7 @@
       });
     }
     onLoad() {
+
     }
   }
 </script>

@@ -207,7 +207,7 @@
         <image src="../images/t_2.png" class="img-icon"></image>
         <view class="text-name">协会领导</view>
       </view>
-      <view class="tag-item color_3" @tap="membersMore">
+      <view class="tag-item color_3" @tap="membersMore" data-id="2">
         <image src="../images/t_3.png" class="img-icon"></image>
         <view class="text-name" data-id="2">理事单位</view>
       </view>
@@ -354,8 +354,13 @@
           url: './leader'
         });
       },
-      membersMore() {
+      membersMore(e) {
         //更多会员
+        var id = e.currentTarget.dataset.id;
+        wx.setStorage({
+          key: 'memberId',
+          data: id
+        });
         wx.switchTab({
           url: './member'
         });
@@ -428,7 +433,24 @@
         });
       });
       self.$apply();
+    };
+
+    loginFun() {
+      wx.login({//登录
+        success: (res) => {
+          console.log(res.code)
+          if (res.code) {
+            //发起网络请求
+            httpUtils.get('https://xyy51.cn/login.php?code=' + res.code).then((res) => {
+              console.log(res);
+            })
+          } else {
+            console.log('登录失败！' + res.errMsg)
+          }
+        }
+      });
     }
+
     onLoad() {
       let self = this;
 
@@ -448,6 +470,40 @@
         });
       });
       self.$apply();
+
+      this.loginFun();//登录
+      wx.checkSession({//检查登录session是否过期
+        success: (res) => {
+          wx.showToast({
+            title: '登录未过期!',
+            duration: 2000
+          })
+        },
+        fail: (res) => {
+          wx.showModal({
+            title: '提示',
+            content: '登录已过期是否要重新登录？'
+          })
+          //发起再次登录
+          this.loginFun();//登录
+        }
+      });
+      // 查看是否授权
+      wx.getSetting({
+        success: function (res) {
+          console.log(res)
+          // if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          wx.getUserInfo({
+            success: function (res) {
+              console(res)
+            }
+          })
+          // }
+        }
+      })
+
+
     }
   }
 </script>
