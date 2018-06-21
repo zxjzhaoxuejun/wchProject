@@ -163,7 +163,7 @@
         success: function (res) {
           console.log(res.data);
           for (let i = 0; i < res.data.length; i++) {
-            res.data[i].art_thumb = 'https://xyy51.cn/' + res.data[i].art_thumb;
+            res.data[i].art_thumb = Api.host + '/' + res.data[i].art_thumb;
             res.data[i].create_time = formatDate(Number(res.data[i].create_time));
           }
           self.setData({
@@ -184,7 +184,7 @@
         success: function (res) {
           console.log(res.data);
           for (let i = 0; i < res.data.length; i++) {
-            res.data[i].art_thumb = 'https://xyy51.cn/' + res.data[i].art_thumb;
+            res.data[i].art_thumb = Api.host + '/' + res.data[i].art_thumb;
             res.data[i].create_time = formatDate(Number(res.data[i].create_time));
           }
           self.setData({

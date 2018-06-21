@@ -41,7 +41,7 @@
     <view class="person-mode">
       <block wx:for="{{person}}" wx:key="this">
         <view class="person-list">
-          <image src="https://xyy51.cn/{{item.pics}}" class="img"></image>
+          <image src="{{host}}{{item.pics}}" class="img"></image>
           <view>
             <text>姓名：</text>{{item.name}}</view>
           <view>
@@ -70,7 +70,8 @@
       autoplay: true,
       duration: 1000,
       interval: 5000,
-      person: []
+      person: [],
+      host: ''
     };
 
     methods = {};
@@ -79,6 +80,7 @@
 
     onShow() {
       let self = this;
+      this.host = Api.host + '/';
       httpUtils.get(Api.ideas).then(res => {
         console.log(res);
         self.setData({

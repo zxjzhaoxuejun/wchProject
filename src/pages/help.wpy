@@ -70,8 +70,8 @@
       autoplay: true,
       duration: 1000,
       interval: 5000,
-      serviceVal: ''
-      // loadStu: false
+      serviceVal: '',
+      host: ''
     };
 
     methods = {};
@@ -80,6 +80,7 @@
 
     onShow() {
       let self = this;
+      this.host = Api.host + '/';
       httpUtils.get(Api.service).then((res) => {
         console.log(res)
         self.setData({

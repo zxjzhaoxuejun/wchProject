@@ -66,13 +66,14 @@
     </view>
     <!-- 列表 -->
     <view class="section">
-      <scroll-view scroll-y style="height:100%;">
+      <scroll-view scroll-y style="height:100%;" bindscrolltolower="lower">
         <block wx:for="{{list}}" wx:key="this">
           <view class="article-list" @tap="memberDetails" data-id="{{item.id}}">
             <view class="article-title">{{item.name}}</view>
             <view class="article-abstract">{{item.describe}}</view>
           </view>
         </block>
+        <view class="footer-loading" hidden="{{!isAll}}">我是有底线(⊙o⊙)…</view>
       </scroll-view>
     </view>
   </view>
@@ -93,11 +94,13 @@
       autoplay: true,
       duration: 1000,
       interval: 5000,
+      pageindex: 1, //第几次加载
       tapList: [
         { name: '会员单位', check: true },
         { name: '理事单位', check: false }
       ],
-      list: []
+      list: [],
+      isAll: false
     };
 
     methods = {
@@ -110,12 +113,19 @@
             this.tapList[i].check = false;
           }
         }
+        this.list = [];
+        this.isAll = false;
+        this.pageindex = 1;
+        this.$apply();
         let self = this;
         httpUtils
           .get(Api.member + (indexVal + 1))
           .then(res => {
+            wx.setStorageSync("data", res);
             self.setData({
-              list: res
+              list: res,
+              pageindex: 1,
+              isAll: false
             });
           });
       },
@@ -130,6 +140,15 @@
         wx.navigateTo({
           url: 'member-details?id=' + id + '&type=' + type
         });
+      },
+      lower(e) {//滚动到最底部触发
+        if (!this.isAll) {
+          var n = this.pageindex + 1;
+          var data = this.list;
+          this.add(n, data)
+        } else {
+          return;
+        }
       }
     };
     onPullDownRefresh() {
@@ -158,13 +177,38 @@
       let self = this;
       var url = Api.member + id;
       httpUtils.get(url).then(res => {
+        wx.setStorageSync("data", res)
         self.setData({
           list: res
         });
       });
     }
+    add(n, dataJson) {
+      let self = this;
+      var id = 1;
+      for (let i = 0; i < this.tapList.length; i++) {
+        if (this.tapList[i].check == true) {
+          id = i + 1;
+        }
+      }
+      var url = Api.member + id + '&page=' + n;
+      httpUtils.get(url).then(res => {
+        if (res.length == 0) {
+          self.isAll = true;
+          return false;
+        }
+        var geigroups;
+        if (n == 2) {
+          geigroups = wx.getStorageSync('data').concat(dataJson);
+        } else {
+          geigroups = dataJson
+        }
+        self.pageindex = n;   //第一次加载，设置1  
+        self.list = geigroups.concat(res);  //放置返回数据的数组,设为空
+        self.$apply();
+      });
+    }
     onLoad() {
-
     }
   }
 </script>

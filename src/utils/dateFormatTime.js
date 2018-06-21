@@ -32,7 +32,7 @@ export function formatDateTime(input) {
 export function formatDate(input) {
   const pad = num => (num < 10 ? '0' + num : num);
   // disable check
-  const date = new Date(input);
+  var date = new Date(input * 1000);
   return (
     date.getFullYear() +
     '-' +
