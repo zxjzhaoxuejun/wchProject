@@ -189,6 +189,9 @@
 </style>
 <template>
   <view class="index-container">
+    <!-- <open-data type="userAvatarUrl"></open-data> -->
+    <open-data type="userNickName"></open-data>
+    <button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">获取用户信息</button>
     <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
       <block wx:for="{{bannerUrl}}" wx:key="id">
         <swiper-item>
@@ -449,6 +452,9 @@
           }
         }
       });
+    };
+    onGotUserInfo(e) {
+      console.log(e)
     }
 
     onLoad() {
@@ -476,7 +482,7 @@
         success: (res) => {
           wx.showToast({
             title: '登录未过期!',
-            duration: 2000
+            duration: 3000
           })
         },
         fail: (res) => {
@@ -489,19 +495,20 @@
         }
       });
       // 查看是否授权
-      wx.getSetting({
-        success: function (res) {
-          console.log(res)
-          // if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-          wx.getUserInfo({
-            success: function (res) {
-              console(res)
-            }
-          })
-          // }
-        }
-      })
+      this.onGotUserInfo()
+      // wx.getSetting({
+      //   success: function (res) {
+      //     console.log(res)
+      //     // if (res.authSetting['scope.userInfo']) {
+      //     // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+      //     wx.getUserInfo({
+      //       success: function (res) {
+      //         console(res)
+      //       }
+      //     })
+      //     // }
+      //   }
+      // })
 
 
     }
