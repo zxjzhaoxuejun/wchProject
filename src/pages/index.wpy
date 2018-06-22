@@ -9,8 +9,8 @@
     <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
       <block wx:for="{{bannerUrl}}" wx:key="id">
         <swiper-item>
-          <image src="{{host}}{{item.art_thumb}}" @tap="artDetails" class="slide-image" width="100%" height="150" data-id="{{item.id}}"
-          />
+          <image src="{{host}}{{item.art_thumb}}" @tap="artDetails" class="slide-image" width="100%" height="150" mode="aspectFill"
+            data-id="{{item.id}}" />
         </swiper-item>
       </block>
     </swiper>
@@ -258,7 +258,7 @@
           console.log(res.code)
           if (res.code) {
             //发起网络请求
-            httpUtils.get('https://xyy51.cn/login.php?code=' + res.code).then((res) => {
+            httpUtils.get(Api.login + res.code).then((res) => {
               console.log(res);
             })
           } else {

@@ -20,7 +20,7 @@
         <block wx:for="{{articleList}}" wx:key="this">
           <view class="article-list" @tap="artDetails" data-id="{{item.id}}">
             <view class="article-img">
-              <image src="{{item.art_thumb==''?img:item.art_thumb}}" class="article-thumb" mode="widthFit" />
+              <image src="{{item.art_thumb==host?img:item.art_thumb}}" class="article-thumb" mode="widthFit" />
             </view>
             <view class="article-con">
               <view class="article-title">{{item.art_title}}</view>
@@ -57,7 +57,9 @@
       indicatorDots: false,
       autoplay: true,
       duration: 1000,
-      interval: 5000
+      interval: 5000,
+      img: '../images/normol.jpg',
+      host: ''
     };
 
     computed = {
@@ -98,6 +100,7 @@
       });
     }
     onShow() {
+      this.host = Api.host + '/';
       let self = this;
       wx.request({
         url: Api.schoolList, //接口地址

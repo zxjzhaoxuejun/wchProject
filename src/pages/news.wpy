@@ -23,7 +23,7 @@
         <block wx:for="{{articleList}}" wx:key="this">
           <view class="article-list" @tap="artDetails" data-id="{{item.id}}">
             <view class="article-img">
-              <image src="{{item.art_thumb==''?img:item.art_thumb}}" class="article-thumb" mode="widthFit" />
+              <image src="{{item.art_thumb==host?img:item.art_thumb}}" class="article-thumb" mode="widthFit" />
             </view>
             <view class="article-con">
               <view class="article-title">{{item.art_title}}</view>
@@ -35,7 +35,7 @@
             </view>
           </view>
         </block>
-        <view class="footer-loading" hidden="{{!isAll}}">我是有底线(⊙o⊙)…</view>
+        <view class="footer-loading" hidden="{{!isAll}}">我是有底线滴(⊙o⊙)…</view>
       </scroll-view>
     </view>
   </view>
@@ -70,7 +70,9 @@
       duration: 1000,
       interval: 5000,
       pageindex: 1,
-      isAll: false
+      isAll: false,
+      img: '../images/normol.jpg',
+      host: ''
     };
 
     methods = {
@@ -175,6 +177,7 @@
       })
     }
     onShow() {
+      this.host = Api.host + '/';
       var id = 2;
       for (let i = 0; i < this.tapList.length; i++) {
         if (this.tapList[i].check == true) {

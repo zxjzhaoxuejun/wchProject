@@ -52,7 +52,10 @@ var config = {
   user: `${host}/about.php?id=1`,
 
   //注册提交接口
-  register: `${host}/personList.php?id=2`
+  register: `${host}/personList.php?id=2`,
+
+  //登录获取appid
+  login: `${host}/login.php?code=`
 };
 //对外把对象config返回
 module.exports = config;
