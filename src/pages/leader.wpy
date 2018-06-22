@@ -14,7 +14,7 @@
     <view class="person-mode">
       <block wx:for="{{person}}" wx:key="this">
         <view class="person-list">
-          <image src="{{host}}{{item.pics}}" class="img"></image>
+          <image src="{{host}}{{item.pics}}" class="img" mode="widthFix"></image>
           <view>
             <text>姓名：</text>{{item.name}}</view>
           <view>
