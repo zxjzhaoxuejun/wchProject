@@ -48,7 +48,7 @@
     onShareAppMessage() {
       return {
         title: this.content.art_title,
-        path: '/page/details'
+        path: './pages/details'
       };
     }
     onLoad(options) {
