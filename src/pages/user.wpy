@@ -1,26 +1,5 @@
 <style lang="less">
-  .wxParse-p {
-    display: none;
-  }
-
-  .about-container {
-    padding: 30rpx 0;
-  }
-
-  .wxParse-p:first-child {
-    display: block;
-    padding: 20rpx 30rpx;
-
-    .wxParse-inline {
-      display: block;
-      letter-spacing: 4rpx;
-      line-height: 46rpx;
-      text-indent: 50rpx;
-    }
-    text:nth-of-type(odd) {
-      display: none;
-    }
-  }
+  @import '../less/base.less';
 </style>
 <template>
   <view class="about-container">

@@ -1,24 +1,5 @@
 <!-- 会员列表页 -->
 <style lang="less">
-  .tab-list {
-    width: 100%;
-    height: 6%;
-    display: flex;
-    background: #f8f8f8;
-    .tab-list-item {
-      display: inline-block;
-      width: 50%;
-      padding: 15rpx 0;
-      font-size: 28rpx;
-      color: #666666;
-      text-align: center;
-    }
-    .active {
-      background: #1296db;
-      color: #ffffff;
-    }
-  }
-
   .section {
     height: 60%;
     flex-grow: 9999;

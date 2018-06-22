@@ -1,32 +1,5 @@
 <style lang="less">
-  .per-container {
-    height: 100%;
-    overflow-y: scroll;
-  }
-
-  .person-mode {
-    padding: 30rpx;
-
-    .img {
-      display: block;
-      width: 100%;
-      height: 360rpx;
-    }
-
-    .person-list {
-      border: 1px #ccc solid;
-      border-radius: 6px;
-      margin-bottom: 30rpx;
-
-      view {
-        padding: 20rpx;
-        font-size: 26rpx;
-      }
-      text {
-        font-weight: 700;
-      }
-    }
-  }
+  @import '../less/base.less';
 </style>
 <template>
   <view class="per-container">

@@ -1,25 +1,5 @@
 <style lang="less">
-  .fw-container {
-    height: 100%;
-    overflow-y: scroll;
-  }
-
-  .fw-list {
-    padding: 20rpx;
-
-    .list-title {
-      color: #1779b8;
-      font-weight: 700;
-      font-size: 28rpx;
-      margin-top: 20rpx;
-    }
-
-    .list-item {
-      font-size: 24rpx;
-      color: #666;
-      padding: 10rpx 0;
-    }
-  }
+  @import '../less/base.less';
 </style>
 <template>
   <view class="fw-container">

@@ -49,6 +49,26 @@ loading {
     margin-left: 20rpx;
   }
 }
+
+.tab-list {
+  width: 100%;
+  height: 6%;
+  display: flex;
+  justify-content: space-around;
+  background: #f8f8f8;
+  .tab-list-item {
+    display: inline-block;
+    width: 100%;
+    padding: 15rpx 0;
+    font-size: 28rpx;
+    color: #666666;
+    text-align: center;
+  }
+  .active {
+    background: #1296db;
+    color: #ffffff;
+  }
+}
 </style>
 
 <script>
@@ -76,7 +96,8 @@ export default class extends wepy.app {
       navigationBarBackgroundColor: '#1779b8',
       navigationBarTitleText: '网创会',
       navigationBarTextStyle: '#fff',
-      enablePullDownRefresh: true
+      enablePullDownRefresh: true,
+      withCredentials: true
     },
     tabBar: {
       selectedColor: '#1779b8',
