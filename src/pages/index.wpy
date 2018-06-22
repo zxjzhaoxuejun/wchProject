@@ -212,8 +212,8 @@
     onShareAppMessage() {
       return {
         title: '深圳市网创会',
-        path: './pages/index',
-        imageUrl: '../images/logo_3.jpg'
+        path: '/pages/index'
+        // imageUrl: '../images/logo_3.jpg'
       }
     }
 
