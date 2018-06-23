@@ -40,7 +40,8 @@
 <script>
   import wepy from 'wepy';
   import { formatDate } from '../utils/dateFormatTime';
-  import Api from '../utils/api';
+  // import Api from '../utils/api';//开发版
+  import Api from '../utils/config';//线上版
 
   export default class School extends wepy.page {
     config = {
@@ -88,8 +89,8 @@
         success: function (res) {
           console.log(res.data);
           for (let i = 0; i < res.data.length; i++) {
-            res.data[i].art_thumb = Api.host + '/' + res.data[i].art_thumb;
-            res.data[i].create_time = formatDate(Number(res.data[i].create_time));
+            res.data[i].art_thumb = Api.img + '/' + res.data[i].art_thumb;
+            res.data[i].create_time = formatDate(Number(res.data[i].create_time) * 1000);
           }
           self.setData({
             articleList: res.data,
@@ -100,7 +101,7 @@
       });
     }
     onShow() {
-      this.host = Api.host + '/';
+      this.host = Api.img + '/';
       let self = this;
       wx.request({
         url: Api.schoolList, //接口地址
@@ -110,8 +111,8 @@
         success: function (res) {
           console.log(res.data);
           for (let i = 0; i < res.data.length; i++) {
-            res.data[i].art_thumb = Api.host + '/' + res.data[i].art_thumb;
-            res.data[i].create_time = formatDate(Number(res.data[i].create_time));
+            res.data[i].art_thumb = Api.img + '/' + res.data[i].art_thumb;
+            res.data[i].create_time = formatDate(Number(res.data[i].create_time) * 1000);
           }
           self.setData({
             articleList: res.data,

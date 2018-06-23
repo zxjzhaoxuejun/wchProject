@@ -24,7 +24,8 @@
   import wepy from 'wepy';
   import htmlParser from '../components/htmlParser';
   import { formatDateTime } from '../utils/dateFormatTime';
-  import Api from '../utils/api';
+  // import Api from '../utils/api';//开发版
+  import Api from '../utils/config';//线上版
 
   export default class MemberDetails extends wepy.page {
     config = {
@@ -46,7 +47,6 @@
     events = {};
 
     onLoad(options) {
-      console.log(options);
       if (!options.id) return;
       var url = Api.memberDetails + options.id + '&type=' + options.type;
       if (options.type == 1) {
@@ -67,9 +67,9 @@
           'content-type': 'application/json' // 默认值
         },
         success: res => {
-          res.data[0].create_time = formatDateTime(Number(res.data[0].create_time) * 1000);
-          self.content1 = res.data[0].content;
-          self.content = res.data[0];
+          res.data.create_time = formatDateTime(res.data.create_time);
+          self.content1 = res.data.content;
+          self.content = res.data;
           // self.content1 = res.data;
           //注意，在此处修改了content2之后，需要手动调用$apply()方法更新数据
           self.$apply();

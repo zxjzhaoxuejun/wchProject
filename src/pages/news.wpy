@@ -44,7 +44,8 @@
 <script>
   import wepy from 'wepy';
   import { formatDate } from '../utils/dateFormatTime';
-  import Api from '../utils/api';
+  // import Api from '../utils/api';//开发版
+  import Api from '../utils/config';//线上版
   import httpUtils from '../utils/httpUtils';
 
   export default class News extends wepy.page {
@@ -91,12 +92,12 @@
         this.pageindex = 1;
         this.$apply();
         let self = this;
-        var url = Api.news + (indexVal + 2);//接口地址
+        var url = Api.news + (indexVal + 2) + '&page=0';//接口地址
         httpUtils.get(url).then((res) => {
           for (let i = 0; i < res.length; i++) {
-            res[i].art_thumb = Api.host + '/' + res[i].art_thumb;
+            res[i].art_thumb = Api.img + '/' + res[i].art_thumb;
             res[i].create_time = formatDate(
-              Number(res[i].create_time)
+              Number(res[i].create_time) * 1000
             );
           }
           wx.setStorageSync("data", res);
@@ -133,8 +134,8 @@
       var url = Api.news + id + '&page=' + n;
       httpUtils.get(url).then(res => {
         for (let i = 0; i < res.length; i++) {
-          res[i].art_thumb = Api.host + '/' + res[i].art_thumb;
-          res[i].create_time = formatDate(Number(res[i].create_time));
+          res[i].art_thumb = Api.img + '/' + res[i].art_thumb;
+          res[i].create_time = formatDate(Number(res[i].create_time) * 1000);
         }
         if (res.length == 0) {
           self.isAll = true;
@@ -164,11 +165,11 @@
         }
       }
       let self = this;
-      var url = Api.news + id;//接口地址
+      var url = Api.news + id + '&page=0';//接口地址
       httpUtils.get(url).then((res) => {
         for (let i = 0; i < res.length; i++) {
-          res[i].art_thumb = Api.host + '/' + res[i].art_thumb;
-          res[i].create_time = formatDate(Number(res[i].create_time));
+          res[i].art_thumb = Api.img + '/' + res[i].art_thumb;
+          res[i].create_time = formatDate(Number(res[i].create_time) * 1000);
         }
         self.setData({
           articleList: res,
@@ -177,7 +178,8 @@
       })
     }
     onShow() {
-      this.host = Api.host + '/';
+      // this.host = Api.host + '/';
+      this.host = Api.img + '/';
       var id = 2;
       for (let i = 0; i < this.tapList.length; i++) {
         if (this.tapList[i].check == true) {
@@ -185,11 +187,11 @@
         }
       }
       let self = this;
-      var url = Api.news + id;//接口地址
+      var url = Api.news + id + '&page=0';//接口地址
       httpUtils.get(url).then((res) => {
         for (let i = 0; i < res.length; i++) {
-          res[i].art_thumb = Api.host + '/' + res[i].art_thumb;
-          res[i].create_time = formatDate(Number(res[i].create_time));
+          res[i].art_thumb = Api.img + '/' + res[i].art_thumb;
+          res[i].create_time = formatDate(Number(res[i].create_time) * 1000);
         }
         wx.setStorageSync("data", res);
         self.setData({

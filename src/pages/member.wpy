@@ -63,7 +63,8 @@
 <script>
   import wepy from 'wepy';
   import httpUtils from '../utils/httpUtils';
-  import Api from '../utils/api';
+  // import Api from '../utils/api';//开发版
+  import Api from '../utils/config';//线上版
 
   export default class Member extends wepy.page {
     config = {
@@ -100,7 +101,7 @@
         this.$apply();
         let self = this;
         httpUtils
-          .get(Api.member + (indexVal + 1))
+          .get(Api.member + (indexVal + 1) + '&page=0')
           .then(res => {
             wx.setStorageSync("data", res);
             self.setData({
@@ -140,7 +141,7 @@
         }
       }
       let self = this;
-      httpUtils.get(Api.member + id).then(res => {
+      httpUtils.get(Api.member + id + '&page=0').then(res => {
         self.setData({
           list: res
         });
@@ -170,7 +171,7 @@
       }
 
       let self = this;
-      var url = Api.member + id;
+      var url = Api.member + id + '&page=0';
       httpUtils.get(url).then(res => {
         wx.setStorageSync("data", res);
         wx.removeStorageSync('memberId');

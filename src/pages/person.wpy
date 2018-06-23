@@ -30,7 +30,8 @@
 <script>
   import wepy from 'wepy';
   import httpUtils from '../utils/httpUtils';
-  import Api from '../utils/api';
+  // import Api from '../utils/api';//开发版
+  import Api from '../utils/config';//线上版
 
   export default class Person extends wepy.page {
     config = {
@@ -53,7 +54,7 @@
 
     onShow() {
       let self = this;
-      this.host = Api.host + '/';
+      this.host = Api.img + '/';
       httpUtils.get(Api.ideas).then(res => {
         console.log(res);
         self.setData({

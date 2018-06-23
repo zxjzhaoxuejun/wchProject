@@ -24,7 +24,8 @@
   import wepy from 'wepy';
   import htmlParser from '../components/htmlParser';
   import { formatDate, formatDateTime } from '../utils/dateFormatTime';
-  import Api from '../utils/api';
+  // import Api from '../utils/api';//开发版
+  import Api from '../utils/config';//线上版
 
   export default class Details extends wepy.page {
     config = {
@@ -34,7 +35,9 @@
     data = {
       name: 'myHtmlParserKiner',
       content1: '',
-      content: ''
+      content: '',
+      norId: '',
+      type: ''
     };
 
     components = {
@@ -46,15 +49,19 @@
     events = {};
 
     onShareAppMessage() {
+      var id = this.norId;
+      var type = this.type;
       return {
         title: this.content.art_title,
-        path: '/pages/details'
+        path: '/pages/details?id=' + id + '&type=' + type
       };
     }
     onLoad(options) {
       console.log(options);
       if (!options.id) return;
       var url = '';
+      this.norId = options.id;
+      this.type = options.type;
       if (options.type == 1) {
         //资讯
         url = Api.details + options.id;
@@ -69,7 +76,7 @@
           'content-type': 'application/json' // 默认值
         },
         success: res => {
-          res.data[0].create_time = formatDate(Number(res.data[0].create_time));
+          res.data[0].create_time = formatDate(Number(res.data[0].create_time) * 1000);
           self.content1 = res.data[0].art_content;
           self.content = res.data[0];
           // self.content1 = res.data;

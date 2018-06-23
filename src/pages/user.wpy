@@ -10,7 +10,8 @@
 <script>
   import wepy from 'wepy';
   import htmlParser from '../components/htmlParser';
-  import Api from '../utils/api';
+  // import Api from '../utils/api';//开发版
+  import Api from '../utils/config';//线上版
 
   export default class User extends wepy.page {
     config = {

@@ -16,7 +16,7 @@
             <text class="required">*</text>选择级别:</label>
           <picker bindchange="bindPickerChange" range="{{selectList}}">
             <view class="picker">
-              {{selectList[answer.index]}}
+              {{selectList[answer.type]}}
             </view>
           </picker>
         </view>
@@ -35,7 +35,7 @@
         <view class="section">
           <label class="section-title">
             <text class="required">*</text>联系方式:</label>
-          <input type="number" name="tel" maxlength="12" bindinput="bindKeyInput" class="input-val" data-name="tel" placeholder="输入联系方式..."
+          <input type="number" name="tel" maxlength="11" bindinput="bindKeyInput" class="input-val" data-name="tel" placeholder="输入联系方式..."
           />
         </view>
         <view class="section">
@@ -47,7 +47,7 @@
         <view class="section">
           <label class="section-title">
             <text class="required"></text>公司网址:</label>
-          <input type="text" maxlength="50" name="url" bindinput="bindKeyInput" class="input-val" data-name="tb_url" placeholder="输入公司网址..."
+          <input type="text" maxlength="50" name="url" bindinput="bindKeyInput" class="input-val" data-name="tb_url" placeholder="http://"
           />
         </view>
 
@@ -67,6 +67,8 @@
   import wepy from 'wepy';
   import httpUtils from '../utils/httpUtils';
   import WxValidate from '../utils/WxValidate';
+  // import Api from '../utils/api';//开发版
+  import Api from '../utils/config';//线上版
 
   export default class Register extends wepy.page {
     config = {
@@ -79,14 +81,14 @@
       buttonText: '提交申请',
       disabled: false,
       answer: {
-        index: 1
+        type: 0
       },
       errors: ''
     };
 
     methods = {
       bindPickerChange(e) {
-        this.answer.index = e.detail.value;
+        this.answer.type = e.detail.value;
         this.$apply();
       },
       bindKeyInput(e) {
@@ -105,19 +107,49 @@
       this.buttonText = '提交中...';
       this.disabled = true;
       this.$apply();
-      console.log(this.data);
       let self = this;
-      setTimeout(() => {
-        self.loading = false;
-        self.buttonText = '提交申请';
-        self.disabled = false;
-        // self.answer = {};
-        this.answer.index = 0;
-        self.$apply();
-        wx.showToast({
-          title: '提交成功!'
-        });
-      }, 3000);
+      var asw = self.data.answer;
+      wx.request({
+        url: Api.register, //接口地址
+        data: asw,
+        header: {
+          'content-type': 'application/json' // 默认值
+        },
+        success: function (res) {
+          console.log(res)
+          self.loading = false;
+          self.buttonText = '提交申请';
+          self.disabled = false;
+          self.answer.type = 0;
+          self.$apply();
+          wx.showModal({
+            content: res.data.msg + ',是否返回首页？',
+            success: function (res) {
+              if (res.confirm) {
+                wx.switchTab({
+                  url: './index'
+                });
+              } else if (res.cancel) {
+                wx.redirectTo({
+                  url: './register'
+                })
+              }
+            }
+          })
+        }
+      })
+
+      // setTimeout(() => {
+      //   self.loading = false;
+      //   self.buttonText = '提交申请';
+      //   self.disabled = false;
+      //   // self.answer = {};
+      //   this.answer.index = 0;
+      //   self.$apply();
+      //   wx.showToast({
+      //     title: '提交成功!'
+      //   });
+      // }, 3000);
     }
 
     submitForm(e) {
@@ -128,6 +160,7 @@
         this.$apply();
         return false;
       }
+      // 校验成功
       this.errors = '';
       this.setLoading();
     }
