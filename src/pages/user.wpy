@@ -50,5 +50,25 @@
         }
       });
     }
+
+    onTabItemTap() {
+      var url = Api.user;
+      let self = this;
+      wx.request({
+        url: url,
+        header: {
+          'content-type': 'application/json' // 默认值
+        },
+        success: res => {
+          console.log(res);
+          self.content1 = res.data[0].abstract;
+          // self.content1 = res.data;
+          //注意，在此处修改了content2之后，需要手动调用$apply()方法更新数据
+          self.$apply();
+          //调用通知接口通知组件更新数据
+          self.$invoke('htmlParser', 'htmlParserNotice');
+        }
+      });
+    }
   }
 </script>

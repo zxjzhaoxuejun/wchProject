@@ -2,7 +2,7 @@
   @import '../less/base.less';
 </style>
 <template>
-  <view class="index-container">
+  <view class="index-container" wx:if="{{showIndex}}">
     <!-- <open-data type="userAvatarUrl"></open-data> -->
     <!-- <open-data type="userNickName"></open-data> -->
     <!-- <button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">获取用户信息</button> -->
@@ -137,7 +137,8 @@
       counselor: [],
       schools: [],
       article: [],
-      host: ''
+      host: '',
+      showIndex: false
     };
 
     methods = {
@@ -243,14 +244,15 @@
       this.host = Api.img + '/';
       httpUtils.get(Api.index).then(res => {
         for (let i = 0; i < res.article.length; i++) {//formatDate
-          res.article[i].create_time = formatDate(res.article[i].create_time);
+          res.article[i].create_time = res.article[i].create_time.split(' ')[0];
         }
         self.setData({
           article: res.article,
           company: res.company,
           schools: res.schools,
           counselor: res.counselor,
-          bannerUrl: res.hots
+          bannerUrl: res.hots,
+          showIndex: true
         });
       });
       self.$apply();
@@ -276,26 +278,43 @@
     onGotUserInfo(e) {
       console.log(e)
     }
-
-    onLoad() {
+    onTabItemTap() {
       let self = this;
-
       // this.host = Api.host + '/';
       this.host = Api.img + '/';
       httpUtils.get(Api.index).then(res => {
         for (let i = 0; i < res.article.length; i++) {//formatDate
-
-          res.article[i].create_time = formatDate(res.article[i].create_time);
+          res.article[i].create_time = res.article[i].create_time.split(' ')[0];
         }
         self.setData({
           article: res.article,
           company: res.company,
           schools: res.schools,
           counselor: res.counselor,
-          bannerUrl: res.hots
+          bannerUrl: res.hots,
+          showIndex: true
         });
       });
       self.$apply();
+    }
+    onLoad() {
+      // let self = this;
+
+      // // this.host = Api.host + '/';
+      // this.host = Api.img + '/';
+      // httpUtils.get(Api.index).then(res => {
+      //   for (let i = 0; i < res.article.length; i++) {//formatDate
+      //     res.article[i].create_time = formatDate(res.article[i].create_time);
+      //   }
+      //   self.setData({
+      //     article: res.article,
+      //     company: res.company,
+      //     schools: res.schools,
+      //     counselor: res.counselor,
+      //     bannerUrl: res.hots
+      //   });
+      // });
+      // self.$apply();
 
       // this.loginFun();//登录
       // wx.checkSession({//检查登录session是否过期

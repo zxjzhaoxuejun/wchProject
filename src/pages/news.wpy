@@ -1,5 +1,5 @@
 <style lang="less">
-@import '../less/new.less';
+  @import '../less/new.less';
 </style>
 <template>
   <view class="container">
@@ -42,54 +42,148 @@
 </template>
 
 <script>
-import wepy from 'wepy';
-import { formatDate } from '../utils/dateFormatTime';
-// import Api from '../utils/api';//开发版
-import Api from '../utils/config'; //线上版
-import httpUtils from '../utils/httpUtils';
+  import wepy from 'wepy';
+  import { formatDate } from '../utils/dateFormatTime';
+  // import Api from '../utils/api';//开发版
+  import Api from '../utils/config'; //线上版
+  import httpUtils from '../utils/httpUtils';
 
-export default class News extends wepy.page {
-  config = {
-    navigationBarTitleText: '资讯中心'
-  };
-  components = {};
+  export default class News extends wepy.page {
+    config = {
+      navigationBarTitleText: '资讯中心'
+    };
+    components = {};
 
-  data = {
-    tapList: [
-      { name: '行业资讯', check: true },
-      { name: '协会动态', check: false },
-      { name: '会员资讯', check: false },
-      { name: '政策信息', check: false }
-    ],
-    articleList: [],
-    bannerUrl: ['../images/news_banner.jpg', '../images/news_1.jpg'],
-    indicatorDots: false,
-    autoplay: true,
-    duration: 1000,
-    interval: 5000,
-    pageindex: 1,
-    isAll: false,
-    img: '../images/normol.jpg',
-    host: ''
-  };
+    data = {
+      tapList: [
+        { name: '行业资讯', check: true },
+        { name: '协会动态', check: false },
+        { name: '会员资讯', check: false },
+        { name: '政策信息', check: false }
+      ],
+      articleList: [],
+      bannerUrl: ['../images/news_banner.jpg', '../images/news_1.jpg'],
+      indicatorDots: false,
+      autoplay: true,
+      duration: 1000,
+      interval: 5000,
+      pageindex: 1,
+      isAll: false,
+      img: '../images/normol.jpg',
+      host: ''
+    };
 
-  methods = {
-    changeNews(e) {
-      var indexVal = e.currentTarget.dataset.index;
-      for (let i = 0; i < this.tapList.length; i++) {
-        if (i === indexVal) {
-          this.tapList[i].check = true;
+    methods = {
+      changeNews(e) {
+        var indexVal = e.currentTarget.dataset.index;
+        for (let i = 0; i < this.tapList.length; i++) {
+          if (i === indexVal) {
+            this.tapList[i].check = true;
+          } else {
+            this.tapList[i].check = false;
+          }
+        }
+
+        this.articleList = [];
+        this.isAll = false;
+        this.pageindex = 1;
+        this.$apply();
+        let self = this;
+        var url = Api.news + (indexVal + 2) + '&page=0'; //接口地址
+        httpUtils.get(url).then(res => {
+          for (let i = 0; i < res.length; i++) {
+            res[i].art_thumb = Api.img + '/' + res[i].art_thumb;
+            res[i].create_time = formatDate(Number(res[i].create_time) * 1000);
+          }
+          wx.setStorageSync('data', res);
+          self.setData({
+            articleList: res
+          });
+        });
+      },
+      artDetails(e) {
+        var id = e.currentTarget.dataset.id;
+        wx.navigateTo({
+          url: 'details?id=' + id + '&type=1'
+        });
+      },
+      lower(e) {
+        //滚动到最底部触发
+        if (!this.isAll) {
+          var n = this.pageindex + 1;
+          var data = this.articleList;
+          this.add(n, data);
         } else {
-          this.tapList[i].check = false;
+          return;
         }
       }
+    };
 
-      this.articleList = [];
-      this.isAll = false;
-      this.pageindex = 1;
-      this.$apply();
+    add(n, dataJson) {
       let self = this;
-      var url = Api.news + (indexVal + 2) + '&page=0'; //接口地址
+      var id = 2;
+      for (let i = 0; i < this.tapList.length; i++) {
+        if (this.tapList[i].check == true) {
+          id = i + 2;
+        }
+      }
+      var url = Api.news + id + '&page=' + n;
+      httpUtils.get(url).then(res => {
+        for (let i = 0; i < res.length; i++) {
+          res[i].art_thumb = Api.img + '/' + res[i].art_thumb;
+          res[i].create_time = formatDate(Number(res[i].create_time) * 1000);
+        }
+        if (res.length == 0) {
+          self.isAll = true;
+          if (n <= 2) {
+            self.articleList = wx.getStorageSync('data');
+            self.$apply();
+          }
+          return false;
+        }
+        var geigroups;
+        if (n == 2) {
+          geigroups = wx.getStorageSync('data').concat(dataJson);
+        } else {
+          geigroups = dataJson;
+        }
+        self.pageindex = n; //第一次加载，设置1
+        self.articleList = geigroups.concat(res); //放置返回数据的数组,设为空
+        self.$apply();
+      });
+    }
+
+    onPullDownRefresh() {
+      var id = 2;
+      for (let i = 0; i < this.tapList.length; i++) {
+        if (this.tapList[i].check == true) {
+          id = i + 2;
+        }
+      }
+      let self = this;
+      var url = Api.news + id + '&page=0'; //接口地址
+      httpUtils.get(url).then(res => {
+        for (let i = 0; i < res.length; i++) {
+          res[i].art_thumb = Api.img + '/' + res[i].art_thumb;
+          res[i].create_time = formatDate(Number(res[i].create_time) * 1000);
+        }
+        self.setData({
+          articleList: res
+        });
+        wx.stopPullDownRefresh();
+      });
+    }
+    onShow() {
+      // this.host = Api.host + '/';
+      this.host = Api.img + '/';
+      var id = 2;
+      for (let i = 0; i < this.tapList.length; i++) {
+        if (this.tapList[i].check == true) {
+          id = i + 2;
+        }
+      }
+      let self = this;
+      var url = Api.news + id + '&page=0'; //接口地址
       httpUtils.get(url).then(res => {
         for (let i = 0; i < res.length; i++) {
           res[i].art_thumb = Api.img + '/' + res[i].art_thumb;
@@ -100,102 +194,30 @@ export default class News extends wepy.page {
           articleList: res
         });
       });
-    },
-    artDetails(e) {
-      var id = e.currentTarget.dataset.id;
-      wx.navigateTo({
-        url: 'details?id=' + id + '&type=1'
-      });
-    },
-    lower(e) {
-      //滚动到最底部触发
-      if (!this.isAll) {
-        var n = this.pageindex + 1;
-        var data = this.articleList;
-        this.add(n, data);
-      } else {
-        return;
-      }
     }
-  };
 
-  add(n, dataJson) {
-    let self = this;
-    var id = 2;
-    for (let i = 0; i < this.tapList.length; i++) {
-      if (this.tapList[i].check == true) {
-        id = i + 2;
-      }
-    }
-    var url = Api.news + id + '&page=' + n;
-    httpUtils.get(url).then(res => {
-      for (let i = 0; i < res.length; i++) {
-        res[i].art_thumb = Api.img + '/' + res[i].art_thumb;
-        res[i].create_time = formatDate(Number(res[i].create_time) * 1000);
-      }
-      if (res.length == 0) {
-        self.isAll = true;
-        if (n <= 2) {
-          self.articleList = wx.getStorageSync('data');
-          self.$apply();
+    onTabItemTap() {
+      this.host = Api.img + '/';
+      var id = 2;
+      for (let i = 0; i < this.tapList.length; i++) {
+        if (this.tapList[i].check == true) {
+          id = i + 2;
         }
-        return false;
       }
-      var geigroups;
-      if (n == 2) {
-        geigroups = wx.getStorageSync('data').concat(dataJson);
-      } else {
-        geigroups = dataJson;
-      }
-      self.pageindex = n; //第一次加载，设置1
-      self.articleList = geigroups.concat(res); //放置返回数据的数组,设为空
-      self.$apply();
-    });
-  }
-
-  onPullDownRefresh() {
-    var id = 2;
-    for (let i = 0; i < this.tapList.length; i++) {
-      if (this.tapList[i].check == true) {
-        id = i + 2;
-      }
-    }
-    let self = this;
-    var url = Api.news + id + '&page=0'; //接口地址
-    httpUtils.get(url).then(res => {
-      for (let i = 0; i < res.length; i++) {
-        res[i].art_thumb = Api.img + '/' + res[i].art_thumb;
-        res[i].create_time = formatDate(Number(res[i].create_time) * 1000);
-      }
-      self.setData({
-        articleList: res
+      let self = this;
+      var url = Api.news + id + '&page=0'; //接口地址
+      httpUtils.get(url).then(res => {
+        for (let i = 0; i < res.length; i++) {
+          res[i].art_thumb = Api.img + '/' + res[i].art_thumb;
+          res[i].create_time = formatDate(Number(res[i].create_time) * 1000);
+        }
+        wx.setStorageSync('data', res);
+        self.setData({
+          articleList: res
+        });
       });
-      wx.stopPullDownRefresh();
-    });
-  }
-  onShow() {
-    // this.host = Api.host + '/';
-    this.host = Api.img + '/';
-    var id = 2;
-    for (let i = 0; i < this.tapList.length; i++) {
-      if (this.tapList[i].check == true) {
-        id = i + 2;
-      }
     }
-    let self = this;
-    var url = Api.news + id + '&page=0'; //接口地址
-    httpUtils.get(url).then(res => {
-      for (let i = 0; i < res.length; i++) {
-        res[i].art_thumb = Api.img + '/' + res[i].art_thumb;
-        res[i].create_time = formatDate(Number(res[i].create_time) * 1000);
-      }
-      wx.setStorageSync('data', res);
-      self.setData({
-        articleList: res
-      });
-    });
-  }
 
-  onLoad() {}
-}
+    onLoad() { }
+  }
 </script>

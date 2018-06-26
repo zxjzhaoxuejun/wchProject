@@ -38,7 +38,7 @@
   }
 </style>
 <template>
-  <view class="m-container">
+  <view class="container">
     <!-- 轮播图 -->
     <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
       <block wx:for="{{bannerUrl}}" wx:key="id">
@@ -213,6 +213,31 @@
         self.$apply();
       });
     }
+
+    onTabItemTap(e) {
+      var indexVal = 0;
+      for (let i = 0; i < this.tapList.length; i++) {
+        if (this.tapList[i].check == true) {
+          indexVal = i + 1;
+        }
+      }
+      this.list = [];
+      this.isAll = false;
+      this.pageindex = 1;
+      this.$apply();
+      let self = this;
+      httpUtils
+        .get(Api.member + indexVal + '&page=0')
+        .then(res => {
+          wx.setStorageSync("data", res);
+          self.setData({
+            list: res,
+            pageindex: 1,
+            isAll: false
+          });
+        });
+    }
+
     onLoad() {
 
     }

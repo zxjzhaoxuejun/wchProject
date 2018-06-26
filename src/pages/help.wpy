@@ -70,5 +70,16 @@
         });
       });
     }
+    onTabItemTap() {
+      let self = this;
+      // this.host = Api.host + '/';
+      this.host = Api.img + '/';
+      httpUtils.get(Api.service).then((res) => {
+        console.log(res)
+        self.setData({
+          serviceVal: res[0]
+        });
+      });
+    }
   }
 </script>
