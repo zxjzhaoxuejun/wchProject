@@ -1,151 +1,151 @@
 <style lang="less">
-@import '/wxParse/wxParse.wxss';
-.container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-sizing: border-box;
-}
-
-page {
-  height: 100%;
-  font-size: 24rpx;
-}
-
-.slide-image {
-  width: 100%;
-  height: 240rpx;
-}
-
-swiper {
-  width: 100%;
-  height: 240rpx;
-}
-
-loading {
-  font-size: 18rpx;
-}
-
-.footer-loading {
-  color: #999;
-  text-align: center;
-  padding: 20rpx 0;
-
-  &::before {
-    content: '';
-    display: inline-block;
-    width: 200rpx;
-    height: 1px;
-    background: #ccc;
-    margin-right: 20rpx;
+  @import '/wxParse/wxParse.wxss';
+  .container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
   }
-  &::after {
-    content: '';
-    display: inline-block;
-    width: 200rpx;
-    height: 1px;
-    background: #ccc;
-    margin-left: 20rpx;
-  }
-}
 
-.tab-list {
-  width: 100%;
-  height: 6%;
-  display: flex;
-  justify-content: space-around;
-  background: #f8f8f8;
-  .tab-list-item {
-    display: inline-block;
+  page {
+    height: 100%;
+    font-size: 24rpx;
+  }
+
+  .slide-image {
     width: 100%;
-    padding: 15rpx 0;
-    font-size: 28rpx;
-    color: #666666;
+    height: 170rpx;
+  }
+
+  swiper {
+    width: 100%;
+    height: 170rpx;
+  }
+
+  loading {
+    font-size: 18rpx;
+  }
+
+  .footer-loading {
+    color: #999;
     text-align: center;
+    padding: 20rpx 0;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 200rpx;
+      height: 1px;
+      background: #ccc;
+      margin-right: 20rpx;
+    }
+    &::after {
+      content: '';
+      display: inline-block;
+      width: 200rpx;
+      height: 1px;
+      background: #ccc;
+      margin-left: 20rpx;
+    }
   }
-  .active {
-    background: #1296db;
-    color: #ffffff;
+
+  .tab-list {
+    width: 100%;
+    height: 6%;
+    display: flex;
+    justify-content: space-around;
+    background: #f8f8f8;
+    .tab-list-item {
+      display: inline-block;
+      width: 100%;
+      padding: 15rpx 0;
+      font-size: 28rpx;
+      color: #666666;
+      text-align: center;
+    }
+    .active {
+      background: #1296db;
+      color: #ffffff;
+    }
   }
-}
 </style>
 
 <script>
-import wepy from 'wepy';
-import 'wepy-async-function';
+  import wepy from 'wepy';
+  import 'wepy-async-function';
 
-export default class extends wepy.app {
-  config = {
-    pages: [
-      'pages/index',
-      'pages/news',
-      'pages/help',
-      'pages/member',
-      'pages/user',
-      'pages/details',
-      'pages/person',
-      'pages/leader',
-      'pages/member-details',
-      'pages/other-us',
-      'pages/school',
-      'pages/register'
-    ],
-    window: {
-      backgroundTextStyle: '#fff',
-      navigationBarBackgroundColor: '#1779b8',
-      navigationBarTitleText: '网创会',
-      navigationBarTextStyle: '#fff',
-      enablePullDownRefresh: true,
-      withCredentials: true
-    },
-    tabBar: {
-      selectedColor: '#1779b8',
-      list: [
-        {
-          iconPath: './images/home_n.png',
-          selectedIconPath: './images/home_h.png',
-          pagePath: 'pages/index',
-          text: '首页'
-        },
-        {
-          iconPath: './images/new_n.png',
-          selectedIconPath: './images/new_h.png',
-          pagePath: 'pages/news',
-          text: '资讯'
-        },
-        {
-          iconPath: './images/fw_n.png',
-          selectedIconPath: './images/fw_h.png',
-          pagePath: 'pages/help',
-          text: '服务'
-        },
-        {
-          iconPath: './images/hy.png',
-          selectedIconPath: './images/hy_h.png',
-          pagePath: 'pages/member',
-          text: '会员'
-        },
-        {
-          iconPath: './images/us_n.png',
-          selectedIconPath: './images/us_h.png',
-          pagePath: 'pages/user',
-          text: '关于'
-        }
-      ]
+  export default class extends wepy.app {
+    config = {
+      pages: [
+        'pages/index',
+        'pages/news',
+        'pages/help',
+        'pages/member',
+        'pages/user',
+        'pages/details',
+        'pages/person',
+        'pages/leader',
+        'pages/member-details',
+        'pages/other-us',
+        'pages/school',
+        'pages/register'
+      ],
+      window: {
+        backgroundTextStyle: '#fff',
+        navigationBarBackgroundColor: '#1779b8',
+        navigationBarTitleText: '网创会',
+        navigationBarTextStyle: '#fff',
+        enablePullDownRefresh: true,
+        withCredentials: true
+      },
+      tabBar: {
+        selectedColor: '#1779b8',
+        list: [
+          {
+            iconPath: './images/home_n.png',
+            selectedIconPath: './images/home_h.png',
+            pagePath: 'pages/index',
+            text: '首页'
+          },
+          {
+            iconPath: './images/new_n.png',
+            selectedIconPath: './images/new_h.png',
+            pagePath: 'pages/news',
+            text: '资讯'
+          },
+          {
+            iconPath: './images/fw_n.png',
+            selectedIconPath: './images/fw_h.png',
+            pagePath: 'pages/help',
+            text: '服务'
+          },
+          {
+            iconPath: './images/hy.png',
+            selectedIconPath: './images/hy_h.png',
+            pagePath: 'pages/member',
+            text: '会员'
+          },
+          {
+            iconPath: './images/us_n.png',
+            selectedIconPath: './images/us_h.png',
+            pagePath: 'pages/user',
+            text: '关于'
+          }
+        ]
+      }
+    };
+
+    globalData = {
+      userInfo: null
+    };
+
+    constructor() {
+      super();
+      this.use('requestfix');
+      this.use('promisify');
     }
-  };
 
-  globalData = {
-    userInfo: null
-  };
-
-  constructor() {
-    super();
-    this.use('requestfix');
-    this.use('promisify');
+    onLaunch() { }
   }
-
-  onLaunch() {}
-}
 </script>
